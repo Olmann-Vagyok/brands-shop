@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>B2B პარტნიორობა — BRAND S</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+:root{
+  --blue:#1B3A6B;--blue-dk:#122850;--blue-lt:#2A5298;
+  --yellow:#F9A800;--yellow-dk:#D48E00;
+  --orange:#C44A1A;
+  --white:#fff;--bg:#F4F6FA;--border:#DDE3EE;
+  --text:#1B2D52;--mid:#4A5568;--light:#8A94A6;
+  --red:#E03131;--green:#2F9E44;
+  --shadow:0 4px 20px rgba(27,58,107,.12);
+  --shadow-lg:0 8px 40px rgba(27,58,107,.18);
+  --r:10px;--t:.22s ease;
+}
+body{font-family:'Noto Sans Georgian','Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+img{display:block;width:100%;object-fit:cover}
+ul{list-style:none}
+
+/* TOPBAR */
+.topbar{background:var(--blue-dk);color:rgba(255,255,255,.75);font-size:12.5px;padding:8px 0;text-align:center}
+.topbar strong{color:var(--yellow)}
+
+/* HEADER */
+.header{position:sticky;top:0;z-index:900;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(27,58,107,.07)}
+.hi{max-width:1400px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:18px;height:70px}
+.logo-w{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-w svg{width:44px;height:44px}
+.logo-t .bn{font-size:16px;font-weight:800;color:var(--blue);letter-spacing:2px}
+.logo-t .bn span{color:var(--yellow)}
+.logo-t .tg{font-size:9px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.hacts{display:flex;align-items:center;gap:2px;margin-left:auto}
+.ib{position:relative;padding:9px 11px;border-radius:8px;font-size:19px;color:var(--mid);display:flex;flex-direction:column;align-items:center;gap:2px;transition:all var(--t);cursor:pointer}
+.ib:hover{color:var(--blue);background:var(--bg)}
+.ib .lb{font-size:10px;color:var(--light);font-weight:500}
+
+/* NAV */
+.nav{background:var(--blue)}
+.ni{max-width:1400px;margin:0 auto;padding:0 28px;display:flex;overflow-x:auto}
+.ni::-webkit-scrollbar{display:none}
+.nv{padding:13px 15px;font-size:13px;font-weight:500;color:rgba(255,255,255,.75);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:all var(--t)}
+.nv:hover{color:#fff;border-bottom-color:var(--yellow)}
+.nv.active{color:#fff;border-bottom-color:var(--yellow)}
+
+/* HERO */
+.hero{position:relative;min-height:420px;background:linear-gradient(130deg,var(--blue-dk) 0%,var(--blue) 55%,#1E4B8A 100%);display:flex;align-items:center;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:20px 20px}
+.hglow{position:absolute;right:-60px;top:-80px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(249,168,0,.15) 0%,transparent 70%);pointer-events:none}
+.hc{position:relative;z-index:1;width:100%;max-width:1400px;margin:0 auto;padding:60px 28px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.htag{display:inline-flex;align-items:center;gap:8px;background:rgba(249,168,0,.15);border:1px solid rgba(249,168,0,.3);color:var(--yellow);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:40px;margin-bottom:18px}
+.hero h1{font-size:42px;font-weight:800;color:#fff;line-height:1.1;margin-bottom:16px}
+.hero h1 span{color:var(--yellow)}
+.hero p{font-size:15px;color:rgba(255,255,255,.7);line-height:1.75;margin-bottom:30px;max-width:440px}
+.btn-y{display:inline-block;background:var(--yellow);color:var(--blue-dk);padding:13px 30px;font-size:14px;font-weight:700;border-radius:40px;border:2px solid var(--yellow);transition:all var(--t)}
+.btn-y:hover{background:var(--yellow-dk);border-color:var(--yellow-dk)}
+
+/* HERO BADGES */
+.hbadges{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1)}
+.hbadge{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,.65)}
+.hbadge span{width:20px;height:20px;border-radius:50%;background:rgba(249,168,0,.2);display:flex;align-items:center;justify-content:center;font-size:11px}
+
+/* HERO RIGHT CARDS */
+.hright{display:flex;flex-direction:column;gap:14px}
+.hcard{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:20px 22px;backdrop-filter:blur(4px)}
+.hcard .hn{font-size:11px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px}
+.hcard .hv{font-size:28px;font-weight:800;color:#fff}
+.hcard .hs{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
+
+/* STATS BAR */
+.statsbar{background:#fff;border-bottom:1px solid var(--border)}
+.sti{max-width:1400px;margin:0 auto;padding:20px 28px;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center}
+.st{border-right:1px solid var(--border)}
+.st:last-child{border-right:none}
+.stn{font-size:28px;font-weight:800;color:var(--blue);margin-bottom:4px}
+.stn span{color:var(--yellow)}
+.stl{font-size:12px;color:var(--light)}
+
+/* SECTION */
+.sec{max-width:1400px;margin:0 auto;padding:60px 28px}
+.shd{text-align:center;margin-bottom:40px}
+.shd h2{font-size:28px;font-weight:800;margin-bottom:8px}
+.shd h2 span{color:var(--yellow)}
+.shd p{font-size:14px;color:var(--light);max-width:480px;margin:0 auto}
+
+/* BENEFITS */
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.bc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:28px 22px;transition:all var(--t)}
+.bc:hover{border-color:var(--yellow);transform:translateY(-4px);box-shadow:var(--shadow)}
+.bico{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px}
+.bico.y{background:rgba(249,168,0,.12)}
+.bico.b{background:rgba(27,58,107,.08)}
+.bico.g{background:rgba(47,158,68,.1)}
+.bico.o{background:rgba(196,74,26,.1)}
+.bc h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.bc p{font-size:13px;color:var(--light);line-height:1.65}
+
+/* STEPS */
+.steps-bg{background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.sgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:1400px;margin:0 auto;padding:0 28px}
+.step{padding:48px 32px;text-align:center;position:relative}
+.step:not(:last-child)::after{content:'→';position:absolute;right:-10px;top:50%;transform:translateY(-50%);font-size:22px;color:var(--border)}
+.step-n{width:48px;height:48px;border-radius:50%;background:var(--blue);color:#fff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.step h3{font-size:16px;font-weight:700;margin-bottom:8px}
+.step p{font-size:13px;color:var(--light);line-height:1.6}
+.step-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--yellow);background:rgba(249,168,0,.1);padding:3px 10px;border-radius:20px;margin-top:10px}
+
+/* PRICING */
+.pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.plan{background:#fff;border:2px solid var(--border);border-radius:14px;padding:32px 28px;position:relative;transition:all var(--t)}
+.plan:hover{border-color:var(--yellow);box-shadow:var(--shadow-lg)}
+.plan.featured{border-color:var(--blue);box-shadow:var(--shadow-lg)}
+.plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--blue);color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 14px;border-radius:20px;white-space:nowrap}
+.plan-name{font-size:13px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.plan-disc{font-size:52px;font-weight:800;color:var(--blue);line-height:1}
+.plan-disc span{font-size:22px}
+.plan-vol{font-size:13px;color:var(--light);margin-top:8px;margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+.plan-vol strong{color:var(--text)}
+.plan-feat{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.pf{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--mid)}
+.pf::before{content:'✓';width:18px;height:18px;border-radius:50%;background:rgba(47,158,68,.12);color:var(--green);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.btn-plan{display:block;width:100%;padding:13px;text-align:center;background:var(--bg);color:var(--blue);font-size:14px;font-weight:700;border-radius:10px;transition:all var(--t);border:2px solid var(--border)}
+.btn-plan:hover,.plan.featured .btn-plan{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* FORM */
+.form-wrap{background:#fff;border-radius:16px;border:1.5px solid var(--border);box-shadow:var(--shadow);padding:48px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.fg{display:flex;flex-direction:column;gap:6px}
+.fg.full{grid-column:1/-1}
+.fg label{font-size:12.5px;font-weight:700;color:var(--mid)}
+.fg input,.fg select,.fg textarea{border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:border-color var(--t),box-shadow var(--t);background:#fff;width:100%}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--yellow);box-shadow:0 0 0 3px rgba(249,168,0,.1)}
+.fg textarea{resize:vertical;min-height:110px}
+.btn-submit{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;border-radius:10px;border:none;cursor:pointer;font-family:inherit;transition:all var(--t);margin-top:6px}
+.btn-submit:hover{background:var(--yellow);color:var(--blue-dk)}
+.form-note{font-size:12px;color:var(--light);text-align:center;margin-top:14px}
+
+/* SUCCESS */
+.success-box{display:none;text-align:center;padding:48px 28px}
+.success-box .si{font-size:56px;margin-bottom:16px}
+.success-box h3{font-size:22px;font-weight:800;margin-bottom:8px}
+.success-box p{font-size:14px;color:var(--light);max-width:380px;margin:0 auto}
+
+/* FOOTER */
+.footer{background:#0F1F3D;color:rgba(255,255,255,.65);padding:52px 0 0}
+.fi{max-width:1400px;margin:0 auto;padding:0 28px 44px;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:38px}
+.fbrand p{font-size:13px;line-height:1.75;margin-bottom:18px}
+.soc{display:flex;gap:9px;margin-top:4px}
+.sc{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all var(--t);color:rgba(255,255,255,.55)}
+.sc:hover{border-color:var(--yellow);color:var(--yellow)}
+.fc h4{font-size:11px;font-weight:700;color:#fff;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.fc ul li{margin-bottom:8px}
+.fc ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:color var(--t)}
+.fc ul li a:hover{color:var(--yellow)}
+.cline{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px}
+.cico{font-size:14px;flex-shrink:0;margin-top:1px}
+.ctxt{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
+.fbot{border-top:1px solid rgba(255,255,255,.08);padding:18px 28px;max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* TOAST */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--blue-dk);color:#fff;padding:11px 22px;border-radius:40px;font-size:13.5px;font-weight:500;z-index:3000;opacity:0;pointer-events:none;transition:all .28s ease;white-space:nowrap;border-left:4px solid var(--yellow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media(max-width:1100px){.bgrid{grid-template-columns:repeat(2,1fr)}.hc{grid-template-columns:1fr}.hright{display:none}}
+@media(max-width:900px){.sti{grid-template-columns:repeat(2,1fr)}.pgrid{grid-template-columns:1fr}.sgrid{grid-template-columns:1fr}.step:not(:last-child)::after{display:none}.fi{grid-template-columns:1fr 1fr}}
+@media(max-width:680px){.form-grid{grid-template-columns:1fr}.bgrid{grid-template-columns:1fr}.fi{grid-template-columns:1fr}.form-wrap{padding:28px 20px}}
+</style>
+</head>
+<body>
+
+<div class="topbar">🚚 <strong>₾50-ზე მეტი</strong> შეკვეთებისთვის — <strong>უფასო მიტანა!</strong> &nbsp;·&nbsp; 📞 <strong>+995 555 000 000</strong> &nbsp;·&nbsp; ორშ–შაბ: <strong>09:00–18:00</strong></div>
+
+<header class="header">
+  <div class="hi">
+    <a href="index.html" class="logo-w">
+      <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+        <path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#1B3A6B" stroke-width="16" stroke-linecap="round"/>
+        <path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="16" stroke-linecap="round"/>
+        <line x1="14" y1="14" x2="22" y2="14" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="12" y1="20" x2="22" y2="20" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="14" y1="26" x2="22" y2="26" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-t"><div class="bn">BRAND <span>S</span></div><div class="tg">ელექტრო პროდუქტები</div></div>
+    </a>
+    <div class="hacts" style="margin-left:auto">
+      <a href="index.html" class="ib" style="font-size:13px;font-weight:600;color:var(--blue);padding:9px 18px;border:1.5px solid var(--border);border-radius:8px;flex-direction:row;gap:6px">← კატალოგი</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hglow"></div>
+  <div class="hc">
+    <div>
+      <div class="htag">🤝 B2B პარტნიორობა</div>
+      <h1>საბითუმო ფასები<br><span>პარტნიორებისთვის</span></h1>
+      <p>შეუერთდი BRAND S-ის B2B პროგრამას და ისარგებლე ექსკლუზიური ფასდაკლებებით, პირადი მენეჯერით და პრიორიტეტული მიტანით — სპეციალურად ელექტრიკოსებისა და სამშენებლო კომპანიებისთვის.</p>
+      <a href="#apply" class="btn-y">განაცხადის შევსება →</a>
+      <div class="hbadges">
+        <div class="hbadge"><span>✓</span> განხილვა 48 საათში</div>
+        <div class="hbadge"><span>✓</span> პირადი მენეჯერი</div>
+        <div class="hbadge"><span>✓</span> გადახდის პირობები</div>
+      </div>
+    </div>
+    <div class="hright">
+      <div class="hcard">
+        <div class="hn">მაქსიმალური ფასდაკლება</div>
+        <div class="hv">25<span>%</span></div>
+        <div class="hs">Elite პარტნიორებისთვის</div>
+      </div>
+      <div class="hcard">
+        <div class="hn">აქტიური B2B პარტნიორი</div>
+        <div class="hv">120<span>+</span></div>
+        <div class="hs">კომპანია საქართველოში</div>
+      </div>
+      <div class="hcard">
+        <div class="hn">საშუალო დაზოგვა/თვეში</div>
+        <div class="hv">₾<span>840</span></div>
+        <div class="hs">Pro tier პარტნიორებისთვის</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="statsbar">
+  <div class="sti">
+    <div class="st"><div class="stn">120<span>+</span></div><div class="stl">B2B პარტნიორი</div></div>
+    <div class="st"><div class="stn">25<span>%</span></div><div class="stl">მაქს. ფასდაკლება</div></div>
+    <div class="st"><div class="stn">48<span>სთ</span></div><div class="stl">განხილვის დრო</div></div>
+    <div class="st"><div class="stn">100<span>+</span></div><div class="stl">პროდუქტი სტოკში</div></div>
+  </div>
+</div>
+
+<!-- BENEFITS -->
+<div class="sec">
+  <div class="shd">
+    <h2>რატომ <span>BRAND S B2B?</span></h2>
+    <p>სპეციალური პირობები, რომლებიც შექმნილია პროფესიონალი პარტნიორებისთვის</p>
+  </div>
+  <div class="bgrid">
+    <div class="bc">
+      <div class="bico y">💰</div>
+      <h3>საბითუმო ფასდაკლება</h3>
+      <p>10%-დან 25%-მდე ფასდაკლება შეძენის მოცულობის მიხედვით. რაც მეტს ყიდულობ, მით მეტს ზოგავ.</p>
+    </div>
+    <div class="bc">
+      <div class="bico b">👤</div>
+      <h3>პირადი მენეჯერი</h3>
+      <p>შენი გუნდის წევრი, რომელიც გიცნობს შენს პროექტებს. ხელმისაწვდომია სამუშაო საათებში.</p>
+    </div>
+    <div class="bc">
+      <div class="bico g">🚚</div>
+      <h3>პრიორიტეტული მიტანა</h3>
+      <p>B2B შეკვეთები პრიორიტეტულად მუშავდება. სასწრაფო შემთხვევებისთვის იმავე დღის მიტანა.</p>
+    </div>
+    <div class="bc">
+      <div class="bico o">💳</div>
+      <h3>გადახდის მოქნილობა</h3>
+      <p>გადავადებული გადახდა 30 დღემდე Elite პარტნიორებისთვის. ინვოისი და ანგარიშ-ფაქტურა.</p>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="steps-bg">
+  <div class="shd" style="padding-top:52px">
+    <h2>როგორ <span>მუშაობს?</span></h2>
+    <p>სამი მარტივი ნაბიჯი B2B პარტნიორობამდე</p>
+  </div>
+  <div class="sgrid">
+    <div class="step">
+      <div class="step-n">1</div>
+      <h3>შეავსე განაცხადი</h3>
+      <p>შეავსე ქვემოთ მოცემული ფორმა. მიუთითე კომპანიის ინფორმაცია და სავარაუდო ყოველთვიური მოცულობა.</p>
+      <div class="step-tag">5 წუთი</div>
+    </div>
+    <div class="step">
+      <div class="step-n">2</div>
+      <h3>განხილვა და დადასტურება</h3>
+      <p>ჩვენი გუნდი განიხილავს განაცხადს 48 საათის განმავლობაში და დაგიკავშირდება პირობების დასაზუსტებლად.</p>
+      <div class="step-tag">48 საათი</div>
+    </div>
+    <div class="step">
+      <div class="step-n">3</div>
+      <h3>დაიწყე შეკვეთა</h3>
+      <p>დადასტურების შემდეგ იღებ B2B ანგარიშს ექსკლუზიური ფასებით, პირად მენეჯერს და პრიორიტეტულ სერვისს.</p>
+      <div class="step-tag">მყისიერად</div>
+    </div>
+  </div>
+  <div style="height:52px"></div>
+</div>
+
+<!-- PRICING -->
+<div class="sec" id="pricing">
+  <div class="shd">
+    <h2>B2B <span>ტარიფები</span></h2>
+    <p>ფასდაკლება ავტომატურად გამოიყენება ყოველთვიური შეძენის მოცულობის მიხედვით</p>
+  </div>
+  <div class="pgrid">
+    <div class="plan">
+      <div class="plan-name">სტანდარტი</div>
+      <div class="plan-disc">10<span>%</span></div>
+      <div class="plan-vol">ყოველთვიური შეძენა: <strong>₾500 – ₾2 000</strong></div>
+      <div class="plan-feat">
+        <div class="pf">საბითუმო კატალოგზე წვდომა</div>
+        <div class="pf">პირადი მენეჯერი</div>
+        <div class="pf">პრიორიტეტული მიტანა</div>
+        <div class="pf">ინვოისი და ანგარიშ-ფაქტურა</div>
+      </div>
+      <a href="#apply" class="btn-plan">განაცხადის შევსება</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-badge">ყველაზე პოპულარული</div>
+      <div class="plan-name">პრო</div>
+      <div class="plan-disc">17<span>%</span></div>
+      <div class="plan-vol">ყოველთვიური შეძენა: <strong>₾2 000 – ₾10 000</strong></div>
+      <div class="plan-feat">
+        <div class="pf">ყველა სტანდარტული პირობა</div>
+        <div class="pf">გაძლიერებული ფასდაკლება</div>
+        <div class="pf">იმავე დღის მიტანა (სასწ.)</div>
+        <div class="pf">ექსკლუზიური სეზონური აქციები</div>
+      </div>
+      <a href="#apply" class="btn-plan">განაცხადის შევსება</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">ელიტა</div>
+      <div class="plan-disc">25<span>%</span></div>
+      <div class="plan-vol">ყოველთვიური შეძენა: <strong>₾10 000+</strong></div>
+      <div class="plan-feat">
+        <div class="pf">ყველა Pro პირობა</div>
+        <div class="pf">გადახდის გადავადება 30 დღე</div>
+        <div class="pf">VIP მხარდაჭერა 24/7</div>
+        <div class="pf">ინდივიდუალური შეთანხმება</div>
+      </div>
+      <a href="#apply" class="btn-plan">განაცხადის შევსება</a>
+    </div>
+  </div>
+</div>
+
+<!-- APPLICATION FORM -->
+<div class="sec" id="apply" style="padding-top:0">
+  <div class="shd">
+    <h2>განაცხადის <span>შევსება</span></h2>
+    <p>შეავსე ფორმა და ჩვენი გუნდი 48 საათში დაგიკავშირდება</p>
+  </div>
+  <div class="form-wrap" id="form-wrap">
+    <form id="b2bform">
+      <div class="form-grid">
+        <div class="fg">
+          <label>კომპანიის სახელი *</label>
+          <input type="text" placeholder="შპს ელექტრო სერვისი" required>
+        </div>
+        <div class="fg">
+          <label>საკონტაქტო პირი *</label>
+          <input type="text" placeholder="სახელი გვარი" required>
+        </div>
+        <div class="fg">
+          <label>ტელეფონი *</label>
+          <input type="tel" placeholder="+995 5XX XXX XXX" required>
+        </div>
+        <div class="fg">
+          <label>ელ-ფოსტა *</label>
+          <input type="email" placeholder="info@company.ge" required>
+        </div>
+        <div class="fg">
+          <label>კომპანიის ტიპი *</label>
+          <select required>
+            <option value="" disabled selected>აირჩიე ტიპი</option>
+            <option>ელექტრიკოსი / ელ. სამუშაოები</option>
+            <option>სამშენებლო კომპანია</option>
+            <option>საბითუმო ვაჭრობა</option>
+            <option>პროექტირების კომპანია</option>
+            <option>სხვა</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>სავარაუდო ყოველთვიური შეძენა *</label>
+          <select required>
+            <option value="" disabled selected>აირჩიე მოცულობა</option>
+            <option>₾500 – ₾2 000 (სტანდარტი — 10%)</option>
+            <option>₾2 000 – ₾10 000 (პრო — 17%)</option>
+            <option>₾10 000+ (ელიტა — 25%)</option>
+          </select>
+        </div>
+        <div class="fg full">
+          <label>დამატებითი ინფორმაცია</label>
+          <textarea placeholder="მოგვიყევი პროექტების შესახებ, სპეციფიკური პროდუქტების მოთხოვნა, ან სხვა შეკითხვა..."></textarea>
+        </div>
+        <div class="fg full">
+          <button type="submit" class="btn-submit">🤝 განაცხადის გაგზავნა</button>
+          <div class="form-note">* სავალდებულო ველები · ჩვენ დაგიკავშირდებით 48 საათის განმავლობაში</div>
+        </div>
+      </div>
+    </form>
+    <div class="success-box" id="success-box">
+      <div class="si">🎉</div>
+      <h3>განაცხადი გაგზავნილია!</h3>
+      <p>მადლობა! ჩვენი გუნდი 48 საათის განმავლობაში დაგიკავშირდება B2B პირობების დასაზუსტებლად.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="fi">
+    <div class="fbrand">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <svg width="34" height="34" viewBox="0 0 100 100" fill="none"><path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#fff" stroke-width="14" stroke-linecap="round"/><path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="14" stroke-linecap="round"/></svg>
+        <span style="font-size:16px;font-weight:800;color:#fff;letter-spacing:2px">BRAND <span style="color:#F9A800">S</span></span>
+      </div>
+      <p>პრემიუმ ელექტრო პროდუქტების მიმწოდებელი საქართველოში. ვმუშაობთ 2015 წლიდან.</p>
+      <div class="soc"><div class="sc">f</div><div class="sc">in</div><div class="sc">📸</div><div class="sc">▶</div></div>
+    </div>
+    <div class="fc"><h4>კომპანია</h4><ul><li><a href="#">ჩვენს შესახებ</a></li><li><a href="#">გუნდი</a></li><li><a href="#">კარიერა</a></li><li><a href="b2b.html">B2B პარტნიორობა</a></li></ul></div>
+    <div class="fc"><h4>მხარდაჭერა</h4><ul><li><a href="#">FAQ</a></li><li><a href="#">მიტანა</a></li><li><a href="#">დაბრუნება</a></li><li><a href="#">კონტაქტი</a></li></ul></div>
+    <div class="fc"><h4>კონტაქტი</h4>
+      <div class="cline"><span class="cico">📞</span><span class="ctxt">+995 555 000 000</span></div>
+      <div class="cline"><span class="cico">✉️</span><span class="ctxt">info@brands.ge</span></div>
+      <div class="cline"><span class="cico">📍</span><span class="ctxt">თბილისი, ვაკე<br>ი. ჭავჭავაძის გამზ. 10</span></div>
+      <div class="cline"><span class="cico">⏰</span><span class="ctxt">ორშ–შაბ: 09:00–18:00</span></div>
+    </div>
+  </div>
+  <div class="fbot"><span>© 2025 BRAND S</span><span>კონფიდენციალობა · პირობები</span></div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+document.getElementById('b2bform').addEventListener('submit', function(e) {
+  e.preventDefault();
+  document.getElementById('b2bform').style.display = 'none';
+  document.getElementById('success-box').style.display = 'block';
+  window.scrollTo({top: document.getElementById('apply').offsetTop - 100, behavior: 'smooth'});
+});
+
+let _tt;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.innerHTML = msg; t.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(() => t.classList.remove('show'), 2800);
+}
+</script>
+</body>
+</html>
