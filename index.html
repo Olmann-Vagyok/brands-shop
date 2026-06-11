@@ -458,7 +458,7 @@ ul{list-style:none}
 
 <script>
 // ── IMAGES ────────────────────────────────────────────────────
-const PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23EBF0FA'/%3E%3C/svg%3E";
+const PH='data:image/svg+xml;base64,'+btoa('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#EBF0FA"/></svg>');
 const IMGS={breaker:PH,connector:PH,socket:PH,switch:PH,cable:PH,panel:PH,extension:PH};
 const PIMG={};
 function img(p){return PIMG[p.id]||IMGS[p.t]||PH}
