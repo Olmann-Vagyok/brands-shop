@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pg-title">პროდუქტი — BRAND S</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1B3A6B;--blue-dk:#122850;--blue-lt:#2A5298;
+  --yellow:#F9A800;--yellow-dk:#D48E00;
+  --orange:#C44A1A;
+  --white:#fff;--bg:#F4F6FA;--border:#DDE3EE;
+  --text:#1B2D52;--mid:#4A5568;--light:#8A94A6;
+  --red:#E03131;--green:#2B7A3A;
+  --shadow:0 4px 20px rgba(27,58,107,.12);
+  --shadow-lg:0 8px 40px rgba(27,58,107,.18);
+  --r:10px;--t:.22s ease;
+}
+body{font-family:'Noto Sans Georgian','Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;background:none;font-family:inherit}
+img{display:block;object-fit:contain}
+ul{list-style:none}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--blue-dk);color:rgba(255,255,255,.75);font-size:12.5px;padding:8px 0;text-align:center}
+.topbar strong{color:var(--yellow)}
+
+/* ── HEADER ── */
+.header{position:sticky;top:0;z-index:900;background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 12px rgba(27,58,107,.07)}
+.hi{max-width:1400px;margin:0 auto;padding:0 28px;display:flex;align-items:center;gap:18px;height:70px}
+.logo-w{display:flex;align-items:center;gap:10px;flex-shrink:0}
+.logo-t .bn{font-size:16px;font-weight:800;color:var(--blue);letter-spacing:2px}
+.logo-t .bn span{color:var(--yellow)}
+.logo-t .tg{font-size:9px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px}
+.search{flex:1;max-width:500px;display:flex;border:1.5px solid var(--border);border-radius:40px;overflow:hidden;transition:border-color var(--t)}
+.search:focus-within{border-color:var(--yellow)}
+.search input{flex:1;border:none;outline:none;padding:10px 18px;font-size:14px;font-family:inherit;color:var(--text)}
+.search button{background:var(--yellow);color:#fff;padding:0 18px;font-size:14px;transition:background var(--t)}
+.search button:hover{background:var(--yellow-dk)}
+.hacts{display:flex;align-items:center;gap:2px;margin-left:auto}
+.ib{position:relative;padding:9px 11px;border-radius:8px;font-size:19px;color:var(--mid);display:flex;flex-direction:column;align-items:center;gap:2px;transition:all var(--t);cursor:pointer}
+.ib:hover{color:var(--blue);background:var(--bg)}
+.ib .lb{font-size:10px;color:var(--light);font-weight:500}
+.bdg{position:absolute;top:5px;right:5px;background:var(--red);color:#fff;font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:none;align-items:center;justify-content:center}
+
+/* ── BREADCRUMB ── */
+.bc{background:#fff;border-bottom:1px solid var(--border)}
+.bci{max-width:1400px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--light);flex-wrap:wrap}
+.bci a{color:var(--light);transition:color var(--t)}
+.bci a:hover{color:var(--blue)}
+.bci .sep{color:var(--border)}
+.bci .cur{color:var(--text);font-weight:600}
+
+/* ── PRODUCT MAIN ── */
+.pd-wrap{max-width:1400px;margin:0 auto;padding:36px 28px}
+.pd-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+
+/* Image side */
+.pd-img-wrap{position:sticky;top:90px}
+.pd-main-img{background:#fff;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;aspect-ratio:1;display:flex;align-items:center;justify-content:center;padding:24px;margin-bottom:12px}
+.pd-main-img img{width:100%;height:100%;object-fit:contain;max-height:420px}
+.pd-stock-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;background:rgba(43,122,58,.08);border:1px solid rgba(43,122,58,.2);border-radius:8px;font-size:13px;font-weight:600;color:var(--green)}
+.pd-stock-bar .dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+
+/* Info side */
+.pd-badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 10px;border-radius:20px;margin-bottom:14px}
+.b-hot{background:var(--orange);color:#fff}
+.b-sale{background:var(--red);color:#fff}
+.b-new{background:var(--blue);color:#fff}
+.b-promo{background:var(--yellow);color:var(--blue-dk)}
+
+.pd-name{font-size:26px;font-weight:800;color:var(--text);line-height:1.2;margin-bottom:14px}
+.pd-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.pd-sku{font-size:12px;color:var(--light);background:var(--bg);border:1px solid var(--border);padding:4px 10px;border-radius:6px;font-family:monospace}
+.pd-brand{font-size:12px;font-weight:700;color:var(--blue);background:rgba(27,58,107,.07);padding:4px 10px;border-radius:6px}
+.pd-rating{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.stars{color:var(--yellow);font-size:14px;letter-spacing:1px}
+.rv{font-size:13px;color:var(--light)}
+
+.pd-price-box{background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:20px;margin-bottom:22px}
+.pd-price-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pd-price-now{font-size:36px;font-weight:800;color:var(--blue)}
+.pd-price-old{font-size:18px;color:var(--light);text-decoration:line-through}
+.pd-price-off{font-size:13px;font-weight:700;color:var(--red);background:rgba(224,49,49,.1);padding:4px 10px;border-radius:6px}
+.pd-vat{font-size:11px;color:var(--light);margin-top:8px}
+
+/* Qty + cart */
+.pd-qty-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.qty-ctrl{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:10px;overflow:hidden}
+.qty-ctrl button{width:40px;height:44px;font-size:18px;font-weight:700;color:var(--text);transition:all var(--t);background:#fff}
+.qty-ctrl button:hover{background:var(--blue);color:#fff}
+.qty-ctrl input{width:52px;height:44px;border:none;outline:none;text-align:center;font-size:16px;font-weight:700;font-family:inherit;color:var(--text)}
+.btn-add-big{flex:1;padding:13px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;border-radius:10px;transition:all var(--t)}
+.btn-add-big:hover{background:var(--yellow);color:var(--blue-dk)}
+.btn-wish-big{width:48px;height:48px;border:1.5px solid var(--border);border-radius:10px;font-size:20px;display:flex;align-items:center;justify-content:center;transition:all var(--t)}
+.btn-wish-big:hover,.btn-wish-big.on{border-color:var(--red);color:var(--red)}
+
+/* Delivery cards */
+.del-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.del-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:12px}
+.del-ico{font-size:20px;flex-shrink:0}
+.del-card h5{font-size:12.5px;font-weight:700;margin-bottom:3px}
+.del-card p{font-size:11.5px;color:var(--light)}
+
+/* ── TABS ── */
+.tabs-wrap{max-width:1400px;margin:0 auto;padding:0 28px 52px}
+.tabs-bar{display:flex;border-bottom:2px solid var(--border);margin-bottom:28px}
+.tab{padding:13px 22px;font-size:14px;font-weight:600;color:var(--light);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all var(--t)}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue)}
+.tab-pane{display:none}
+.tab-pane.on{display:block}
+
+/* Spec table */
+.spec-tbl{width:100%;border-collapse:collapse}
+.spec-tbl tr:nth-child(odd) td{background:var(--bg)}
+.spec-tbl td{padding:11px 16px;font-size:13.5px;border-bottom:1px solid var(--border)}
+.spec-tbl td:first-child{font-weight:700;color:var(--text);width:40%;white-space:nowrap}
+.spec-tbl td:last-child{color:var(--mid)}
+
+/* Description */
+.desc-txt{font-size:14px;line-height:1.8;color:var(--mid);max-width:720px}
+.desc-txt h4{font-size:16px;font-weight:700;color:var(--text);margin:20px 0 10px}
+.desc-txt ul{list-style:disc;padding-left:20px}
+.desc-txt ul li{margin-bottom:6px}
+
+/* Reviews */
+.reviews-list{display:flex;flex-direction:column;gap:16px;max-width:720px}
+.rv-card{background:#fff;border:1px solid var(--border);border-radius:10px;padding:18px}
+.rv-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rv-avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--blue-lt));display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex-shrink:0}
+.rv-author{font-size:13.5px;font-weight:700}
+.rv-date{font-size:11px;color:var(--light)}
+.rv-stars{color:var(--yellow);font-size:12px}
+.rv-txt{font-size:13.5px;color:var(--mid);line-height:1.6}
+
+/* ── RELATED ── */
+.rel-wrap{background:#fff;border-top:1px solid var(--border);padding:52px 0}
+.rel-inner{max-width:1400px;margin:0 auto;padding:0 28px}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:24px}
+.sec-title{font-size:22px;font-weight:800}
+.sec-title span{color:var(--yellow)}
+.see{font-size:13px;font-weight:600;color:var(--blue);padding:7px 16px;border:1.5px solid var(--blue);border-radius:40px;transition:all var(--t)}
+.see:hover{background:var(--blue);color:#fff}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.pc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all var(--t)}
+.pc:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:transparent}
+.pimg-lnk{display:block}
+.pimg{position:relative;height:180px;overflow:hidden;background:linear-gradient(135deg,#EBF0FA,#F4F6FA)}
+.pimg img{width:100%;height:100%;object-fit:contain;padding:14px;transition:transform .4s ease}
+.pc:hover .pimg img{transform:scale(1.06)}
+.pbadge{position:absolute;top:10px;left:10px;font-size:10px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:20px}
+.b-new-c{background:var(--blue);color:#fff}
+.b-sale-c{background:var(--red);color:#fff}
+.b-hot-c{background:var(--orange);color:#fff}
+.b-promo-c{background:var(--yellow);color:var(--blue-dk)}
+.pb{padding:13px 14px 15px}
+.pcat{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.pname{font-size:13px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:8px}
+.pname-lnk{text-decoration:none;color:inherit}
+.pname-lnk:hover .pname{color:var(--blue)}
+.pprice{display:flex;align-items:center;gap:7px}
+.pnow{font-size:17px;font-weight:800;color:var(--blue)}
+.pold{font-size:12px;color:var(--light);text-decoration:line-through}
+.poff{font-size:10px;font-weight:700;color:var(--red);background:rgba(224,49,49,.08);padding:2px 5px;border-radius:4px}
+.btn-add-sm{display:block;width:100%;margin-top:10px;padding:9px;background:var(--blue);color:#fff;font-size:12px;font-weight:700;border-radius:8px;transition:all var(--t)}
+.btn-add-sm:hover{background:var(--yellow);color:var(--blue-dk)}
+
+/* ── CART ── */
+.overlay{position:fixed;inset:0;background:rgba(11,22,47,.55);z-index:1900;opacity:0;visibility:hidden;transition:all var(--t)}
+.overlay.open{opacity:1;visibility:visible}
+.cs{position:fixed;top:0;right:-420px;width:420px;height:100vh;background:#fff;z-index:1901;display:flex;flex-direction:column;transition:right .32s ease;box-shadow:-4px 0 30px rgba(0,0,0,.15)}
+.cs.open{right:0}
+.csh{padding:20px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.csh h3{font-size:16px;font-weight:800}
+.csx{font-size:20px;color:var(--light);cursor:pointer;padding:4px;transition:color var(--t)}
+.csx:hover{color:var(--text)}
+.cslist{flex:1;overflow-y:auto;padding:10px 22px}
+.csi{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border)}
+.csi-img{width:64px;height:64px;border-radius:8px;background:var(--bg);flex-shrink:0;overflow:hidden}
+.csi-img img{width:100%;height:100%;object-fit:contain;padding:5px}
+.csi-inf{flex:1}
+.csi-n{font-size:12.5px;font-weight:600;margin-bottom:3px}
+.csi-p{font-size:14px;font-weight:800;color:var(--blue)}
+.csi-q{display:flex;align-items:center;gap:8px;margin-top:7px}
+.qb{width:25px;height:25px;border:1.5px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all var(--t)}
+.qb:hover{border-color:var(--blue);color:var(--blue)}
+.qv{font-size:13px;font-weight:700;min-width:18px;text-align:center}
+.csi-rm{font-size:16px;color:var(--light);cursor:pointer;align-self:flex-start;transition:color var(--t)}
+.csi-rm:hover{color:var(--red)}
+.cs-empty{text-align:center;padding:55px 20px;color:var(--light)}
+.cs-empty .ei{font-size:48px;margin-bottom:12px}
+.csf{padding:16px 22px;border-top:1px solid var(--border)}
+.cst{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px}
+.cst span{font-size:14px;font-weight:600;color:var(--mid)}
+.cst strong{font-size:21px;font-weight:800;color:var(--blue)}
+.btn-co{display:block;width:100%;padding:13px;text-align:center;background:var(--blue);color:#fff;font-size:14px;font-weight:700;border-radius:10px;transition:background var(--t);border:none;cursor:pointer;font-family:inherit}
+.btn-co:hover{background:var(--yellow);color:var(--blue-dk)}
+
+/* ── FOOTER ── */
+.footer{background:#0F1F3D;color:rgba(255,255,255,.65);padding:52px 0 0}
+.fi{max-width:1400px;margin:0 auto;padding:0 28px 44px;display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:38px}
+.fbrand p{font-size:13px;line-height:1.75;margin-bottom:18px}
+.soc{display:flex;gap:9px}
+.sc{width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;transition:all var(--t);color:rgba(255,255,255,.55)}
+.sc:hover{border-color:var(--yellow);color:var(--yellow)}
+.fc h4{font-size:11px;font-weight:700;color:#fff;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.fc ul li{margin-bottom:8px}
+.fc ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:color var(--t)}
+.fc ul li a:hover{color:var(--yellow)}
+.cline{display:flex;align-items:flex-start;gap:9px;margin-bottom:11px}
+.cico{font-size:14px;flex-shrink:0;margin-top:1px}
+.ctxt{font-size:13px;color:rgba(255,255,255,.5);line-height:1.5}
+.fbot{border-top:1px solid rgba(255,255,255,.08);padding:18px 28px;max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.3)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--blue-dk);color:#fff;padding:11px 22px;border-radius:40px;font-size:13.5px;font-weight:500;z-index:3000;opacity:0;pointer-events:none;transition:all .28s ease;white-space:nowrap;border-left:4px solid var(--yellow)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast .hl{color:var(--yellow);font-weight:700}
+
+/* ── NOT FOUND ── */
+.nf{max-width:500px;margin:80px auto;text-align:center;padding:0 28px}
+.nf h2{font-size:28px;font-weight:800;margin-bottom:12px}
+.nf p{color:var(--light);margin-bottom:24px}
+.btn-back{display:inline-block;padding:12px 28px;background:var(--blue);color:#fff;border-radius:40px;font-weight:700;transition:background var(--t)}
+.btn-back:hover{background:var(--yellow);color:var(--blue-dk)}
+
+@media(max-width:900px){.pd-grid{grid-template-columns:1fr}.pd-img-wrap{position:static}.del-cards{grid-template-columns:1fr}.pgrid{grid-template-columns:repeat(2,1fr)}.fi{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.hi{height:62px}.search{display:none}.pd-wrap{padding:20px 16px}.pd-name{font-size:20px}.pd-price-now{font-size:28px}.tabs-wrap{padding:0 16px 36px}.pgrid{grid-template-columns:repeat(2,1fr)}.fi{grid-template-columns:1fr}.cs{width:100%;right:-100%}}
+</style>
+</head>
+<body>
+
+<div class="topbar">🚚 <strong>₾50-ზე მეტი</strong> შეკვეთებისთვის — <strong>უფასო მიტანა!</strong> &nbsp;·&nbsp; 📞 <strong>+995 555 000 000</strong></div>
+
+<header class="header">
+  <div class="hi">
+    <a href="index.html" class="logo-w">
+      <img src="images/logo.png" alt="BRAND S" style="height:46px;width:auto"
+           onerror="this.style.display='none';document.getElementById('logo-fb').style.display='flex'">
+      <div id="logo-fb" style="display:none;align-items:center;gap:10px">
+        <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+          <path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#1B3A6B" stroke-width="16" stroke-linecap="round"/>
+          <path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="16" stroke-linecap="round"/>
+          <line x1="14" y1="14" x2="22" y2="14" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="12" y1="20" x2="22" y2="20" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="14" y1="26" x2="22" y2="26" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="78" y1="74" x2="86" y2="74" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="78" y1="80" x2="88" y2="80" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="78" y1="86" x2="86" y2="86" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <div class="logo-t"><div class="bn">BRAND <span>S</span></div><div class="tg">ელექტრო პროდუქტები</div></div>
+      </div>
+    </a>
+    <div class="search">
+      <input type="text" placeholder="მოძებნე პროდუქტი...">
+      <button>🔍</button>
+    </div>
+    <div class="hacts">
+      <div class="ib">👤<span class="lb">ანგარიში</span></div>
+      <div class="ib">🤍<span class="lb">რჩეულები</span></div>
+      <div class="ib" id="cbtn">🛒<span id="cbdg" class="bdg">0</span><span class="lb">კალათა</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="bc"><div class="bci" id="breadcrumb"></div></div>
+
+<div id="main-content"></div>
+
+<!-- CART -->
+<div class="overlay" id="ov"></div>
+<div class="cs" id="csd">
+  <div class="csh"><h3>🛒 კალათა</h3><span class="csx" id="cscl">✕</span></div>
+  <div class="cslist" id="cslist"></div>
+  <div class="csf" id="csf" style="display:none">
+    <div class="cst"><span>სულ:</span><strong id="cstotal">₾0</strong></div>
+    <button class="btn-co">შეძენის გაგრძელება →</button>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── IMAGES (same as index.html) ───────────────────────────────
+const B='https://el-ss.ge/upload/66/image/product/500x500/';
+const IMGS={
+  breaker:  B+'c90cd2f1-b852-45d1-a8be-c14cb0a68ad5-71fae5a2371a63ce.webp',
+  connector:B+'ea5083f0-2fe9-4bcf-8fe2-ac7b08eddf5d-ff594a47a9c61818.png',
+  socket:   B+'c52fa89c-516a-4c27-84b0-5a6e873a2626-c81624dce4ac4049.png',
+  switch:   B+'c52fa89c-516a-4c27-84b0-5a6e873a2626-c81624dce4ac4049.png',
+  cable:    B+'e1d91a6f-a98c-4f8f-b6aa-bd04a4c7c46b-45206550938806e6.png',
+  panel:    B+'71d5114c-4872-482c-b5f8-f88236f28140-902239f188506541.png',
+  extension:B+'e63c2113-9de9-4903-9f1f-693e79f0fa15-6c63fc17ed33c0cc.png',
+};
+const PIMG={
+  36:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
+  37:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
+  76:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
+  77:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
+};
+function img(p){return PIMG[p.id]||IMGS[p.t]}
+
+// ── ALL 100 PRODUCTS ──────────────────────────────────────────
+const P=[
+ {id:1,  name:'Schneider Easy9 ამომრთ. 1პ 6ა',   sku:'EZ9F34106', cat:'ავტ. ამომრთველი', brand:'Schneider', price:7.50,  old:null,  badge:'hot',  r:4.9, rv:312, t:'breaker'},
+ {id:2,  name:'Schneider Easy9 ამომრთ. 1პ 10ა',  sku:'EZ9F34110', cat:'ავტ. ამომრთველი', brand:'Schneider', price:8.00,  old:null,  badge:null,  r:4.9, rv:287, t:'breaker'},
+ {id:3,  name:'Schneider Easy9 ამომრთ. 1პ 16ა',  sku:'EZ9F34116', cat:'ავტ. ამომრთველი', brand:'Schneider', price:8.50,  old:null,  badge:null,  r:4.9, rv:445, t:'breaker'},
+ {id:4,  name:'Schneider Easy9 ამომრთ. 1პ 20ა',  sku:'EZ9F34120', cat:'ავტ. ამომრთველი', brand:'Schneider', price:9.00,  old:null,  badge:null,  r:4.8, rv:198, t:'breaker'},
+ {id:5,  name:'Schneider Easy9 ამომრთ. 1პ 25ა',  sku:'EZ9F34125', cat:'ავტ. ამომრთველი', brand:'Schneider', price:10.50, old:null,  badge:null,  r:4.8, rv:156, t:'breaker'},
+ {id:6,  name:'Schneider Easy9 ამომრთ. 1პ 32ა',  sku:'EZ9F34132', cat:'ავტ. ამომრთველი', brand:'Schneider', price:11.50, old:13.00, badge:'sale', r:4.8, rv:134, t:'breaker'},
+ {id:7,  name:'Schneider Easy9 ამომრთ. 1პ 40ა',  sku:'EZ9F34140', cat:'ავტ. ამომრთველი', brand:'Schneider', price:13.00, old:null,  badge:null,  r:4.7, rv:89,  t:'breaker'},
+ {id:8,  name:'Schneider Easy9 ამომრთ. 1პ 50ა',  sku:'EZ9F34150', cat:'ავტ. ამომრთველი', brand:'Schneider', price:15.50, old:null,  badge:null,  r:4.7, rv:67,  t:'breaker'},
+ {id:9,  name:'Schneider Easy9 ამომრთ. 1პ 63ა',  sku:'EZ9F34163', cat:'ავტ. ამომრთველი', brand:'Schneider', price:17.00, old:null,  badge:null,  r:4.7, rv:45,  t:'breaker'},
+ {id:10, name:'Legrand TX3 ამომრთ. 1პ 10ა',      sku:'403348',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:9.00,  old:11.00, badge:'sale', r:4.8, rv:203, t:'breaker'},
+ {id:11, name:'Legrand TX3 ამომრთ. 1პ 16ა',      sku:'403350',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:9.50,  old:12.00, badge:'sale', r:4.8, rv:178, t:'breaker'},
+ {id:12, name:'Legrand TX3 ამომრთ. 1პ 20ა',      sku:'403352',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:10.00, old:null,  badge:null,  r:4.7, rv:145, t:'breaker'},
+ {id:13, name:'Legrand TX3 ამომრთ. 2პ 16ა',      sku:'403493',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:24.00, old:null,  badge:'new', r:4.8, rv:67,  t:'breaker'},
+ {id:14, name:'Legrand TX3 ამომრთ. 2პ 25ა',      sku:'403497',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:28.00, old:34.00, badge:'sale', r:4.8, rv:89,  t:'breaker'},
+ {id:15, name:'Hager MCN116 ამომრთ. 1პ 16ა',     sku:'MCN116',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:11.00, old:null,  badge:null,  r:4.7, rv:112, t:'breaker'},
+ {id:16, name:'Hager MCN120 ამომრთ. 1პ 20ა',     sku:'MCN120',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:12.00, old:null,  badge:null,  r:4.7, rv:98,  t:'breaker'},
+ {id:17, name:'Hager MCN125 ამომრთ. 1პ 25ა',     sku:'MCN125',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:13.50, old:null,  badge:null,  r:4.6, rv:76,  t:'breaker'},
+ {id:18, name:'Siemens 5SL6 ამომრთ. 1პ 16ა',     sku:'5SL61167',  cat:'ავტ. ამომრთველი', brand:'Siemens',   price:12.00, old:14.50, badge:'sale', r:4.9, rv:234, t:'breaker'},
+ {id:19, name:'Siemens 5SL6 ამომრთ. 1პ 25ა',     sku:'5SL61257',  cat:'ავტ. ამომრთველი', brand:'Siemens',   price:14.00, old:null,  badge:null,  r:4.9, rv:167, t:'breaker'},
+ {id:20, name:'Eaton PL6-C16 ამომრთ. 1პ 16ა',    sku:'PL6C16',    cat:'ავტ. ამომრთველი', brand:'Eaton',     price:10.50, old:null,  badge:'new', r:4.6, rv:54,  t:'breaker'},
+ {id:21, name:'ABB SH200L ამომრთ. 1პ 16ა',       sku:'2CDS211001R0160',cat:'ავტ. ამომრთველი',brand:'ABB',   price:11.50, old:13.00, badge:'sale', r:4.8, rv:145, t:'breaker'},
+ {id:22, name:'ABB SH200L ამომრთ. 1პ 25ა',       sku:'2CDS211001R0250',cat:'ავტ. ამომრთველი',brand:'ABB',   price:13.00, old:null,  badge:null,  r:4.8, rv:123, t:'breaker'},
+ {id:23, name:'Schneider iDT60 ამომრთ. 2პ 25ა',  sku:'IDT60N225',  cat:'ავტ. ამომრთველი', brand:'Schneider', price:35.00, old:42.00, badge:'sale', r:4.9, rv:198, t:'breaker'},
+ {id:24, name:'Schneider Acti9 RCD 2პ 25ა 30mA', sku:'A9R44225',   cat:'ავტ. ამომრთველი', brand:'Schneider', price:68.00, old:null,  badge:'hot', r:4.9, rv:312, t:'breaker'},
+ {id:25, name:'Hager CDA225D RCD 25ა 30mA',       sku:'CDA225D',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:75.00, old:88.00, badge:'sale', r:4.8, rv:87,  t:'breaker'},
+ {id:26, name:'WAGO 221-412 კონექტ. 2-სადენი',   sku:'221-412',   cat:'კონექტორები', brand:'WAGO', price:1.20, old:null,  badge:'hot',  r:5.0, rv:892, t:'connector'},
+ {id:27, name:'WAGO 221-413 კონექტ. 3-სადენი',   sku:'221-413',   cat:'კონექტორები', brand:'WAGO', price:1.50, old:null,  badge:'hot',  r:5.0, rv:745, t:'connector'},
+ {id:28, name:'WAGO 221-415 კონექტ. 5-სადენი',   sku:'221-415',   cat:'კონექტორები', brand:'WAGO', price:2.20, old:null,  badge:'hot',  r:5.0, rv:634, t:'connector'},
+ {id:29, name:'WAGO 2773-402 მინი 2-სადენი',      sku:'2773-402',  cat:'კონექტორები', brand:'WAGO', price:0.90, old:1.10,  badge:'sale', r:4.9, rv:456, t:'connector'},
+ {id:30, name:'WAGO 2773-403 მინი 3-სადენი',      sku:'2773-403',  cat:'კონექტორები', brand:'WAGO', price:1.10, old:1.35,  badge:'sale', r:4.9, rv:389, t:'connector'},
+ {id:31, name:'WAGO 224-112 6მმ² 2-სადენი',       sku:'224-112',   cat:'კონექტორები', brand:'WAGO', price:1.80, old:null,  badge:null,  r:4.9, rv:267, t:'connector'},
+ {id:32, name:'WAGO 224-113 6მმ² 3-სადენი',       sku:'224-113',   cat:'კონექტორები', brand:'WAGO', price:2.20, old:null,  badge:null,  r:4.8, rv:198, t:'connector'},
+ {id:33, name:'პლასტმ. ტერმინალი #1 (2.5-4მმ²)',  sku:'PLT-1',     cat:'კონექტორები', brand:'—',    price:0.30, old:null,  badge:null,  r:4.5, rv:134, t:'connector'},
+ {id:34, name:'პლასტმ. ტერმინალი #2 (4-6მმ²)',    sku:'PLT-2',     cat:'კონექტორები', brand:'—',    price:0.35, old:null,  badge:null,  r:4.5, rv:112, t:'connector'},
+ {id:35, name:'პლასტმ. ტერმინალი #3 (6-10მმ²)',   sku:'PLT-3',     cat:'კონექტორები', brand:'—',    price:0.45, old:null,  badge:null,  r:4.5, rv:89,  t:'connector'},
+ {id:36, name:'სპილენძის ბუნიკი DT 10მმ',          sku:'cable-lug-10mm-copper',cat:'კონექტორები',brand:'—',price:0.80,old:null,badge:null,r:4.7,rv:167,t:'connector'},
+ {id:37, name:'სპილენძის ბუნიკი DT 16მმ',          sku:'cable-lug-dt-16mm-copper',cat:'კონექტორები',brand:'—',price:0.90,old:null,badge:null,r:4.7,rv:145,t:'connector'},
+ {id:38, name:'Legrand Niloe სოკეტი 2P+E',         sku:'LG-NIL-S2PE',cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:9.50,old:null,badge:'hot',r:4.8,rv:456,t:'socket'},
+ {id:39, name:'Legrand Niloe ჩამრთველი ერთიანი',   sku:'LG-NIL-CH1', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:7.50,old:null,badge:null,r:4.8,rv:389,t:'switch'},
+ {id:40, name:'Legrand Niloe ჩამრთველი ორმაგი',    sku:'LG-NIL-CH2', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:11.50,old:13.50,badge:'sale',r:4.7,rv:234,t:'switch'},
+ {id:41, name:'Legrand Niloe USB სოკეტი (A+C)',     sku:'LG-NIL-USB', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:22.00,old:null,badge:'new',r:4.9,rv:167,t:'socket'},
+ {id:42, name:'Simon 27 სოკეტი 2P+E',               sku:'SIM27-S2PE', cat:'როზეტები & ჩამრთველები',brand:'Simon',price:12.00,old:null,badge:null,r:4.8,rv:312,t:'socket'},
+ {id:43, name:'Simon 27 ჩამრთველი ერთიანი',         sku:'SIM27-CH1',  cat:'როზეტები & ჩამრთველები',brand:'Simon',price:9.50,old:null,badge:null,r:4.8,rv:267,t:'switch'},
+ {id:44, name:'Simon 27 ჩამქრობი ჩამრთველი',        sku:'SIM27-DIM',  cat:'როზეტები & ჩამრთველები',brand:'Simon',price:34.00,old:42.00,badge:'sale',r:4.7,rv:89,t:'switch'},
+ {id:45, name:'Simon 27 ტელ. სოკეტი RJ11',           sku:'SIM27-RJ11', cat:'როზეტები & ჩამრთველები',brand:'Simon',price:16.00,old:null,badge:null,r:4.6,rv:67,t:'socket'},
+ {id:46, name:'Simon 27 TV სოკეტი (SAT)',             sku:'SIM27-TV',   cat:'როზეტები & ჩამრთველები',brand:'Simon',price:18.00,old:null,badge:null,r:4.6,rv:54,t:'socket'},
+ {id:47, name:'Gunsan Visage სოკეტი 2P+E',           sku:'GUN-VIS-S2PE',cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:8.50,old:10.00,badge:'sale',r:4.6,rv:198,t:'socket'},
+ {id:48, name:'Gunsan Visage ჩამრთველი',              sku:'GUN-VIS-CH1',cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:6.50,old:null,badge:null,r:4.5,rv:156,t:'switch'},
+ {id:49, name:'Gunsan Visage ორმაგი სოკეტი',          sku:'GUN-VIS-DS', cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:14.00,old:17.00,badge:'sale',r:4.5,rv:123,t:'socket'},
+ {id:50, name:'Nilson სოკეტი ჩასაშენებელი',           sku:'NIL-S-FLUSH',cat:'როზეტები & ჩამრთველები',brand:'Nilson',price:5.50,old:null,badge:null,r:4.4,rv:89,t:'socket'},
+ {id:51, name:'Nilson ჩამრთველი ჩასაშენებელი',        sku:'NIL-CH-FLUSH',cat:'როზეტები & ჩამრთველები',brand:'Nilson',price:4.50,old:null,badge:null,r:4.3,rv:78,t:'switch'},
+ {id:52, name:'Multisan MS-01 სოკეტი',                sku:'MS-01',      cat:'როზეტები & ჩამრთველები',brand:'Multisan',price:6.00,old:7.50,badge:'sale',r:4.4,rv:67,t:'socket'},
+ {id:53, name:'Multisan MS-02 ჩამრთველი',              sku:'MS-02',      cat:'როზეტები & ჩამრთველები',brand:'Multisan',price:5.00,old:null,badge:null,r:4.3,rv:56,t:'switch'},
+ {id:54, name:'Schneider Sedna სოკეტი 2P+E',          sku:'SDN1610121', cat:'როზეტები & ჩამრთველები',brand:'Schneider',price:14.00,old:null,badge:null,r:4.7,rv:134,t:'socket'},
+ {id:55, name:'Schneider Sedna ჩამრთველი',             sku:'SDN0100121', cat:'როზეტები & ჩამრთველები',brand:'Schneider',price:11.00,old:null,badge:null,r:4.7,rv:112,t:'switch'},
+ {id:56, name:'ABB Zenit სოკეტი 2P+E',                sku:'ABB-ZEN-S',  cat:'როზეტები & ჩამრთველები',brand:'ABB',price:16.00,old:19.00,badge:'sale',r:4.8,rv:167,t:'socket'},
+ {id:57, name:'ABB Zenit ჩამქრობი ჩამრთველი',          sku:'ABB-ZEN-DIM',cat:'როზეტები & ჩამრთველები',brand:'ABB',price:38.00,old:null,badge:'new',r:4.8,rv:89,t:'switch'},
+ {id:58, name:'FLAT-F 2×0.75 ფლატი კაბელი (100მ)', sku:'FF-2X075-100',cat:'სადენები',brand:'—',price:55.00,old:null,badge:null,r:4.6,rv:123,t:'cable'},
+ {id:59, name:'FLAT-F 2×1.5 ფლატი კაბელი (100მ)',  sku:'FF-2X15-100', cat:'სადენები',brand:'—',price:85.00,old:98.00,badge:'sale',r:4.7,rv:198,t:'cable'},
+ {id:60, name:'FLAT-F 2×2.5 ფლატი კაბელი (100მ)',  sku:'FF-2X25-100', cat:'სადენები',brand:'—',price:125.00,old:null,badge:null,r:4.7,rv:167,t:'cable'},
+ {id:61, name:'FLAT-F 2×4 ფლატი კაბელი (100მ)',    sku:'FF-2X4-100',  cat:'სადენები',brand:'—',price:195.00,old:230.00,badge:'sale',r:4.7,rv:89,t:'cable'},
+ {id:62, name:'FLAT-F 3×1.5 ფლატი კაბელი (100მ)',  sku:'FF-3X15-100', cat:'სადენები',brand:'—',price:105.00,old:null,badge:'hot',r:4.8,rv:312,t:'cable'},
+ {id:63, name:'FLAT-F 3×2.5 ფლატი კაბელი (100მ)',  sku:'FF-3X25-100', cat:'სადენები',brand:'—',price:155.00,old:178.00,badge:'sale',r:4.8,rv:267,t:'cable'},
+ {id:64, name:'FLAT-F 3×4 ფლატი კაბელი (100მ)',    sku:'FF-3X4-100',  cat:'სადენები',brand:'—',price:235.00,old:null,badge:null,r:4.7,rv:89,t:'cable'},
+ {id:65, name:'FLAT-U 2×1.5 (100მ)',                sku:'FU-2X15-100', cat:'სადენები',brand:'—',price:78.00,old:null,badge:null,r:4.6,rv:134,t:'cable'},
+ {id:66, name:'FLAT-U 2×2.5 (100მ)',                sku:'FU-2X25-100', cat:'სადენები',brand:'—',price:115.00,old:135.00,badge:'sale',r:4.6,rv:112,t:'cable'},
+ {id:67, name:'FLAT-U 3×1.5 (100მ)',                sku:'FU-3X15-100', cat:'სადენები',brand:'—',price:95.00,old:null,badge:null,r:4.6,rv:98,t:'cable'},
+ {id:68, name:'FLAT-U 3×2.5 (100მ)',                sku:'FU-3X25-100', cat:'სადენები',brand:'—',price:140.00,old:165.00,badge:'sale',r:4.6,rv:87,t:'cable'},
+ {id:69, name:'PV-3 1×1.5 მხ. სადენი (100მ)',       sku:'PV3-1X15-100',cat:'სადენები',brand:'—',price:42.00,old:null,badge:null,r:4.5,rv:145,t:'cable'},
+ {id:70, name:'PV-3 1×2.5 მხ. სადენი (100მ)',       sku:'PV3-1X25-100',cat:'სადენები',brand:'—',price:68.00,old:null,badge:null,r:4.5,rv:123,t:'cable'},
+ {id:71, name:'PV-3 1×4 მხ. სადენი (100მ)',         sku:'PV3-1X4-100', cat:'სადენები',brand:'—',price:105.00,old:120.00,badge:'sale',r:4.5,rv:89,t:'cable'},
+ {id:72, name:'N2XH 2×1.5 უჰალოგენო (100მ)',        sku:'n2xh-halogen-free-2x15',cat:'სადენები',brand:'—',price:145.00,old:null,badge:'new',r:4.8,rv:67,t:'cable'},
+ {id:73, name:'Cat5e UTP კაბელი (305მ)',             sku:'cat5e-utp',   cat:'სადენები',brand:'—',price:120.00,old:145.00,badge:'sale',r:4.7,rv:198,t:'cable'},
+ {id:74, name:'Cat5e FTP კაბელი (305მ)',             sku:'cat5e-ftp',   cat:'სადენები',brand:'—',price:145.00,old:null,badge:null,r:4.7,rv:156,t:'cable'},
+ {id:75, name:'Cat6e UTP კაბელი (305მ)',             sku:'utp-cat6e',   cat:'სადენები',brand:'—',price:175.00,old:null,badge:'hot',r:4.8,rv:234,t:'cable'},
+ {id:76, name:'2×0.75 რეტრო კაბელი, შავი (100მ)',   sku:'retro-twisted',cat:'სადენები',brand:'—',price:95.00,old:null,badge:'new',r:4.9,rv:89,t:'cable'},
+ {id:77, name:'2×1.5 რეტრო კაბელი, შავი (100მ)',    sku:'-retro-twisted',cat:'სადენები',brand:'—',price:115.00,old:null,badge:'new',r:4.9,rv:67,t:'cable'},
+ {id:78, name:'Makel M-17 ფარი 2-მოდ. ზედაპ.',     sku:'621db1753607c',cat:'განაწ. ფარები',brand:'Makel',price:8.50,old:null,badge:null,r:4.6,rv:89,t:'panel'},
+ {id:79, name:'Makel M-18 ფარი 4-მოდ. ზედაპ.',     sku:'621db1c66cca3',cat:'განაწ. ფარები',brand:'Makel',price:11.00,old:13.00,badge:'sale',r:4.6,rv:123,t:'panel'},
+ {id:80, name:'Makel M-01 ფარი 2-მოდ. ჩასაშ.',     sku:'621cc727beb0b',cat:'განაწ. ფარები',brand:'Makel',price:7.50,old:null,badge:null,r:4.6,rv:78,t:'panel'},
+ {id:81, name:'Makel M-02 ფარი 4-მოდ. ჩასაშ.',     sku:'621cc7779e403',cat:'განაწ. ფარები',brand:'Makel',price:10.00,old:null,badge:null,r:4.6,rv:67,t:'panel'},
+ {id:82, name:'Nilson M-09 ფარი 2-მოდ. ზედაპ.',    sku:'621cccd736a82',cat:'განაწ. ფარები',brand:'Nilson',price:7.00,old:8.50,badge:'sale',r:4.5,rv:56,t:'panel'},
+ {id:83, name:'Nilson M-10 ფარი 4-მოდ. ზედაპ.',    sku:'621dad9d05a40',cat:'განაწ. ფარები',brand:'Nilson',price:9.50,old:null,badge:null,r:4.5,rv:45,t:'panel'},
+ {id:84, name:'Makel ABC პლ. კარადა 200×300×130',   sku:'6220654e060cc',cat:'განაწ. ფარები',brand:'Makel',price:35.00,old:null,badge:'new',r:4.7,rv:34,t:'panel'},
+ {id:85, name:'Makel ABC პლ. კარადა 250×350×150',   sku:'62206d0f44817',cat:'განაწ. ფარები',brand:'Makel',price:42.00,old:50.00,badge:'sale',r:4.7,rv:28,t:'panel'},
+ {id:86, name:'ლითონის ელ. კარადა 250×200×150',     sku:'250200150',    cat:'განაწ. ფარები',brand:'—',price:55.00,old:null,badge:null,r:4.8,rv:45,t:'panel'},
+ {id:87, name:'ლითონის ელ. კარადა 300×250×150',     sku:'300250150',    cat:'განაწ. ფარები',brand:'—',price:68.00,old:78.00,badge:'sale',r:4.8,rv:38,t:'panel'},
+ {id:88, name:'Hager Volta DP12 12-მოდ. ფარი',      sku:'HAG-DP12',     cat:'განაწ. ფარები',brand:'Hager',price:28.00,old:null,badge:'hot',r:4.8,rv:156,t:'panel'},
+ {id:89, name:'ABB MISTRAL65 24-მოდ. ფარი',         sku:'ABB-MIST-24',  cat:'განაწ. ფარები',brand:'ABB',price:48.00,old:58.00,badge:'sale',r:4.9,rv:123,t:'panel'},
+ {id:90, name:'EB-05 დამაგრძ. 3-სოკ. 5მ USB',     sku:'EB-05',cat:'დამაგრძელებელები',brand:'—',price:14.00,old:null,badge:null,r:4.6,rv:89,t:'extension'},
+ {id:91, name:'EB-06 დამაგრძ. 3-სოკ. 3მ',          sku:'EB-06',cat:'დამაგრძელებელები',brand:'—',price:11.00,old:14.00,badge:'sale',r:4.5,rv:123,t:'extension'},
+ {id:92, name:'EB-07 დამაგრძ. 4-სოკ. 3მ',          sku:'EB-07',cat:'დამაგრძელებელები',brand:'—',price:14.50,old:null,badge:null,r:4.6,rv:167,t:'extension'},
+ {id:93, name:'EB-08 დამაგრძ. 4-სოკ. 5მ',          sku:'EB-08',cat:'დამაგრძელებელები',brand:'—',price:18.00,old:22.00,badge:'sale',r:4.6,rv:145,t:'extension'},
+ {id:94, name:'EB-09 დამაგრძ. 5-სოკ. 3მ USB',     sku:'EB-09',cat:'დამაგრძელებელები',brand:'—',price:17.00,old:null,badge:null,r:4.7,rv:112,t:'extension'},
+ {id:95, name:'EB-10 დამაგრძ. 5-სოკ. 5მ მეხდ.',   sku:'EB-10',cat:'დამაგრძელებელები',brand:'—',price:22.00,old:27.00,badge:'sale',r:4.7,rv:198,t:'extension'},
+ {id:96, name:'EB-11 დამაგრძ. 6-სოკ. 3მ',          sku:'EB-11',cat:'დამაგრძელებელები',brand:'—',price:19.00,old:null,badge:null,r:4.6,rv:89,t:'extension'},
+ {id:97, name:'EB-12 დამაგრძ. 6-სოკ. 5მ მეხდ.',   sku:'EB-12',cat:'დამაგრძელებელები',brand:'—',price:26.00,old:32.00,badge:'sale',r:4.7,rv:134,t:'extension'},
+ {id:98, name:'გამანაწ. T-01 3-გამოსასვ.',          sku:'T-01', cat:'დამაგრძელებელები',brand:'—',price:5.50,old:null,badge:null,r:4.4,rv:67,t:'extension'},
+ {id:99, name:'გამანაწ. T-11 4-გამოსასვ.',          sku:'T-11', cat:'დამაგრძელებელები',brand:'—',price:7.50,old:9.00,badge:'sale',r:4.5,rv:89,t:'extension'},
+ {id:100,name:'ელ-ჩანგალი P-01 Schuko',             sku:'P-01', cat:'დამაგრძელებელები',brand:'—',price:3.50,old:null,badge:null,r:4.4,rv:45,t:'extension'},
+];
+
+// ── STATE ─────────────────────────────────────────────────────
+let cart=[], wish=new Set(), qty=1;
+
+// ── CART ─────────────────────────────────────────────────────
+function addCart(id,q){
+  q=q||1;
+  const p=P.find(x=>x.id===id); if(!p)return;
+  const ex=cart.find(i=>i.id===id);
+  ex?ex.qty+=q:cart.push({...p,qty:q});
+  updateCart();
+  showToast(`<span class="hl">${p.name}</span> კალათაში დაემატა!`);
+  openCart();
+}
+function rmCart(id){cart=cart.filter(i=>i.id!==id);updateCart()}
+function chQty(id,d){const it=cart.find(i=>i.id===id);if(!it)return;it.qty+=d;it.qty<=0?rmCart(id):updateCart()}
+function updateCart(){
+  const tot=cart.reduce((s,i)=>s+i.qty,0);
+  const totP=cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const bdg=document.getElementById('cbdg');
+  bdg.textContent=tot; bdg.style.display=tot?'flex':'none';
+  const list=document.getElementById('cslist');
+  const foot=document.getElementById('csf');
+  if(!cart.length){
+    list.innerHTML='<div class="cs-empty"><div class="ei">🛒</div><p>კალათა ცარიელია</p></div>';
+    foot.style.display='none'; return;
+  }
+  foot.style.display='block';
+  document.getElementById('cstotal').textContent=`₾${totP.toFixed(2)}`;
+  list.innerHTML=cart.map(it=>`<div class="csi">
+    <div class="csi-img"><img src="${img(it)}" alt="${it.name}"></div>
+    <div class="csi-inf">
+      <div class="csi-n">${it.name}</div>
+      <div class="csi-p">₾${(it.price*it.qty).toFixed(2)}</div>
+      <div class="csi-q">
+        <div class="qb" onclick="chQty(${it.id},-1)">−</div>
+        <span class="qv">${it.qty}</span>
+        <div class="qb" onclick="chQty(${it.id},1)">+</div>
+      </div>
+    </div>
+    <span class="csi-rm" onclick="rmCart(${it.id})">✕</span>
+  </div>`).join('');
+}
+function openCart(){document.getElementById('csd').classList.add('open');document.getElementById('ov').classList.add('open');document.body.style.overflow='hidden'}
+function closeCart(){document.getElementById('csd').classList.remove('open');document.getElementById('ov').classList.remove('open');document.body.style.overflow=''}
+
+// ── TOAST ─────────────────────────────────────────────────────
+let _tt;
+function showToast(msg){const t=document.getElementById('toast');t.innerHTML=msg;t.classList.add('show');clearTimeout(_tt);_tt=setTimeout(()=>t.classList.remove('show'),2800)}
+
+// ── HELPERS ───────────────────────────────────────────────────
+function stars(r){return '★'.repeat(Math.floor(r))+'☆'.repeat(5-Math.floor(r))}
+const BL={hot:'b-hot',sale:'b-sale',new:'b-new',promo:'b-promo'};
+const BT={hot:'🔥 პოპ.',sale:'ფასდ.',new:'ახალი',promo:'აქცია'};
+
+// ── SPECS from product data ────────────────────────────────────
+function getSpecs(p){
+  const s={};
+  if(p.cat==='ავტ. ამომრთველი'){
+    const poles=p.name.includes('2პ')?'2':p.name.includes('3პ')?'3':'1';
+    const amp=(p.name.match(/(\d+)ა/)||[])[1];
+    s['პოლუსები']=poles;
+    if(amp)s['ნომინ. დენი']=amp+' A';
+    s['გათიშვის უნარი']='6 kA';
+    s['სტანდარტი']='IEC/EN 60898-1';
+    s['სამონტაჟო']='DIN-ლიანდაგი 35მმ';
+    s['სამუშ. ძაბვა']='230/400 V';
+    s['სიხშირე']='50/60 Hz';
+    if(p.name.includes('RCD')||p.name.includes('CDA')){
+      s['გამოყენება']='დიფ. ამომრთველი (RCD)';
+      s['სენსიტ.']='30 mA';
+    }
+  } else if(p.cat==='კონექტორები'){
+    if(p.brand==='WAGO'){
+      s['ტიპი']='Push-in კავშირი';
+      s['სამუშ. ძაბვა']='400 V';
+      s['მაქს. ტოკი']='32 A';
+      const w=(p.name.match(/(\d+)-სადენი/)||[])[1];
+      if(w)s['სადენების რ-ბა']=w;
+      const cs=(p.name.match(/(\d+\.?\d*)მმ²/)||[])[1];
+      s['განაკვეთი']=(cs||'0.14–4')+' მმ²';
+    } else {
+      s['ტიპი']='სჭანჭრიანი კლემა';
+      s['მასალა']='პოლიამიდი + სპილენძი';
+    }
+    s['ტემპ. დიაპ.']='-40…+85 °C';
+  } else if(p.cat==='როზეტები & ჩამრთველები'){
+    s['ტიპი']=p.t==='socket'?'სოკეტი (Schuko)':'ჩამრთველი';
+    s['სამუშ. ძაბვა']='250 V';
+    s['მაქს. ტოკი']='16 A';
+    s['დამონტ. ტიპი']='ჩასაშენებელი';
+    s['დაცვა']='IP20';
+    if(p.name.includes('USB'))s['USB']='Type A + Type C';
+    if(p.name.includes('ჩამქრობი'))s['სიმძლავრე']='40–400 W';
+  } else if(p.cat==='სადენები'){
+    const cs=(p.name.match(/(\d+×\d+\.?\d*)/)||[])[1];
+    if(cs)s['განაკვეთი']=cs+' მმ²';
+    s['გამტარი']='სპილენძი';
+    s['გარსი']=p.name.includes('უჰალოგენო')?'LSOH (უჰალოგენო)':p.name.includes('რეტრო')?'ქსოვილი+PVC':'PVC';
+    s['სამუშ. ძაბვა']='0.6/1 kV';
+    s['ტემპ.']='-25…+70 °C';
+    if(p.name.includes('Cat'))s['კატეგ.']='Cat5e / Cat6e';
+    if(p.name.includes('100მ'))s['სიგრძე']='100 მ / რულონი';
+    if(p.name.includes('305მ'))s['სიგრძე']='305 მ / კოლოფი';
+  } else if(p.cat==='განაწ. ფარები'){
+    const mod=(p.name.match(/(\d+)-მოდ/)||[])[1];
+    if(mod)s['მოდულები']=mod;
+    s['ტიპი']=p.name.includes('ზედაპ.')?'ზედაპირული':p.name.includes('ჩასაშ.')?'ჩასაშენებელი':'კარადა';
+    s['მასალა']=p.name.includes('ლითონ')?'ლითო':'პლასტმასი';
+    s['დაცვა']='IP40';
+    if(p.name.includes('×'))s['განზომ.']=p.name.replace(/.*კარადა\s+/,'').replace(/[^0-9×]/g,'')+'მმ';
+  } else if(p.cat==='დამაგრძელებელები'){
+    const outlets=(p.name.match(/(\d+)-სოკ/)||[])[1];
+    const len=(p.name.match(/(\d+)მ/)||[])[1];
+    if(outlets)s['სოკეტები']=outlets+' ც.';
+    if(len)s['სიგრძე']=len+' მ';
+    s['სამუშ. ძაბვა']='250 V';
+    s['მაქს. ტოკი']='16 A';
+    s['სამუშ. სიმძლავრე']='3500 W';
+    if(p.name.includes('USB'))s['USB']='Type A';
+    if(p.name.includes('მეხდ.')||p.name.includes('surge'))s['მეხდაცვა']='✓ არის';
+  }
+  s['ბრენდი']=p.brand==='—'?'სხვა':p.brand;
+  s['SKU']=p.sku;
+  return s;
+}
+
+// ── RELATED PRODUCTS CARD ─────────────────────────────────────
+function relCard(p){
+  const off=p.old?Math.round((1-p.price/p.old)*100):0;
+  return `<div class="pc">
+    <a href="product.html?id=${p.id}" class="pimg-lnk">
+      <div class="pimg">
+        <img src="${img(p)}" alt="${p.name}" loading="lazy">
+        ${p.badge?`<span class="pbadge b-${p.badge}-c">${BT[p.badge]}</span>`:''}
+      </div>
+    </a>
+    <div class="pb">
+      <div class="pcat">${p.cat}</div>
+      <a href="product.html?id=${p.id}" class="pname-lnk"><div class="pname">${p.name}</div></a>
+      <div class="pprice">
+        <span class="pnow">₾${p.price.toFixed(2)}</span>
+        ${p.old?`<span class="pold">₾${p.old}</span><span class="poff">-${off}%</span>`:''}
+      </div>
+      <button class="btn-add-sm" onclick="addCart(${p.id},1)">+ კალათა</button>
+    </div>
+  </div>`;
+}
+
+// ── RENDER PRODUCT PAGE ───────────────────────────────────────
+function renderProduct(p){
+  const off=p.old?Math.round((1-p.price/p.old)*100):0;
+  const specs=getSpecs(p);
+  const related=P.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4);
+
+  // page title + breadcrumb
+  document.title=`${p.name} — BRAND S`;
+  document.getElementById('breadcrumb').innerHTML=`
+    <a href="index.html">მთავარი</a>
+    <span class="sep">›</span>
+    <a href="index.html">${p.cat}</a>
+    <span class="sep">›</span>
+    <span class="cur">${p.name}</span>`;
+
+  const fakeReviews=[
+    {name:'გ. ბერძენიშვილი', date:'2025-03-14', r:5, txt:'ძალიან კარგი პროდუქტი. სწრაფი მიტანა, ორიგინალია. ვურჩევ ყველას!'},
+    {name:'ნ. ქებურია',       date:'2025-02-28', r:5, txt:'ფასი შესანიშნავია. ხარისხი მოკლებია. მე-2 ყიდვა ამ მაღაზიაში.'},
+    {name:'ლ. ხარაბაძე',      date:'2025-01-10', r:4, txt:'კარგი პროდუქტი, ოდნავ გვიან ჩამოვიდა, მაგრამ საბოლოოდ კმაყოფილი ვარ.'},
+  ];
+
+  document.getElementById('main-content').innerHTML=`
+
+  <div class="pd-wrap">
+    <div class="pd-grid">
+      <!-- IMAGE -->
+      <div class="pd-img-wrap">
+        <div class="pd-main-img">
+          <img src="${img(p)}" alt="${p.name}">
+        </div>
+        <div class="pd-stock-bar">
+          <div class="dot"></div>
+          მარაგშია · 24სთ-ში გამოგზავნა
+        </div>
+      </div>
+      <!-- INFO -->
+      <div class="pd-info">
+        ${p.badge?`<span class="pd-badge b-${p.badge}">${BT[p.badge]}</span>`:''}
+        <h1 class="pd-name">${p.name}</h1>
+        <div class="pd-meta">
+          <span class="pd-sku">${p.sku}</span>
+          <span class="pd-brand">${p.brand==='—'?'სხვა':p.brand}</span>
+        </div>
+        <div class="pd-rating">
+          <span class="stars">${stars(p.r)}</span>
+          <span class="rv">${p.r} · ${p.rv} შეფასება</span>
+        </div>
+        <div class="pd-price-box">
+          <div class="pd-price-row">
+            <span class="pd-price-now">₾${p.price.toFixed(2)}</span>
+            ${p.old?`<span class="pd-price-old">₾${p.old}</span><span class="pd-price-off">-${off}% დაზოგვა</span>`:''}
+          </div>
+          <div class="pd-vat">ფასი მოიცავს დღგ-ს</div>
+        </div>
+        <div class="pd-qty-row">
+          <div class="qty-ctrl">
+            <button onclick="if(qty>1){qty--;document.getElementById('qty-in').value=qty}">−</button>
+            <input id="qty-in" type="number" value="1" min="1" max="999"
+                   oninput="qty=Math.max(1,parseInt(this.value)||1);this.value=qty">
+            <button onclick="qty++;document.getElementById('qty-in').value=qty">+</button>
+          </div>
+          <button class="btn-add-big" onclick="addCart(${p.id},qty)">🛒 კალათაში დამატება</button>
+          <button class="btn-wish-big${wish.has(p.id)?' on':''}" id="wish-btn"
+                  onclick="toggleWish(${p.id})">🤍</button>
+        </div>
+        <div class="del-cards">
+          <div class="del-card"><span class="del-ico">🚚</span><div><h5>სწრაფი მიტანა</h5><p>₾50+ შეკვეთებზე უფასოდ</p></div></div>
+          <div class="del-card"><span class="del-ico">↩️</span><div><h5>14-დღიანი დაბრუნება</h5><p>პრობლემის გარეშე</p></div></div>
+          <div class="del-card"><span class="del-ico">🛡️</span><div><h5>ორიგინალი</h5><p>100% ავთენტური პროდუქტი</p></div></div>
+          <div class="del-card"><span class="del-ico">🔒</span><div><h5>უსაფრთხო გადახდა</h5><p>Visa · MC · BOG Pay</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs-wrap">
+    <div class="tabs-bar">
+      <div class="tab on" onclick="showTab('specs',this)">სპეციფიკაციები</div>
+      <div class="tab" onclick="showTab('desc',this)">აღწერა</div>
+      <div class="tab" onclick="showTab('reviews',this)">შეფასებები (${p.rv})</div>
+    </div>
+    <div id="tab-specs" class="tab-pane on">
+      <table class="spec-tbl">
+        ${Object.entries(specs).map(([k,v])=>`<tr><td>${k}</td><td>${v}</td></tr>`).join('')}
+      </table>
+    </div>
+    <div id="tab-desc" class="tab-pane">
+      <div class="desc-txt">
+        <p><strong>${p.name}</strong> — მაღალი ხარისხის ელექტრო პროდუქტი, რომელიც სერტიფიცირებულია საერთაშორისო სტანდარტებით.</p>
+        <h4>მახასიათებლები</h4>
+        <ul>
+          ${Object.entries(specs).slice(0,5).map(([k,v])=>`<li><strong>${k}:</strong> ${v}</li>`).join('')}
+        </ul>
+        <h4>გამოყენების სფერო</h4>
+        <p>გამოიყენება საცხოვრებელი და კომერციული ობიექტების ელექტრო სამონტაჟო სამუშაოებში.
+        ${p.brand!=='—'?`<strong>${p.brand}</strong>-ის წარმოებული პროდუქტი, სრული გარანტიით.`:''}</p>
+      </div>
+    </div>
+    <div id="tab-reviews" class="tab-pane">
+      <div class="reviews-list">
+        ${fakeReviews.map(rv=>`<div class="rv-card">
+          <div class="rv-head">
+            <div class="rv-avatar">${rv.name[0]}</div>
+            <div><div class="rv-author">${rv.name}</div><div class="rv-date">${rv.date}</div></div>
+            <div class="rv-stars" style="margin-left:auto">${'★'.repeat(rv.r)}</div>
+          </div>
+          <div class="rv-txt">${rv.txt}</div>
+        </div>`).join('')}
+      </div>
+    </div>
+  </div>
+
+  <!-- RELATED -->
+  ${related.length?`
+  <div class="rel-wrap">
+    <div class="rel-inner">
+      <div class="sec-hd">
+        <div class="sec-title">მსგავსი <span>პროდუქტები</span></div>
+        <a href="index.html" class="see">კატალოგი →</a>
+      </div>
+      <div class="pgrid">${related.map(relCard).join('')}</div>
+    </div>
+  </div>`:''}
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="fi">
+      <div class="fbrand">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <svg width="34" height="34" viewBox="0 0 100 100" fill="none">
+            <path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#1B3A6B" stroke-width="14" stroke-linecap="round"/>
+            <path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="14" stroke-linecap="round"/>
+          </svg>
+          <span style="font-size:16px;font-weight:800;color:#fff;letter-spacing:2px">BRAND <span style="color:#F9A800">S</span></span>
+        </div>
+        <p>პრემიუმ ელექტრო პროდუქტების მიმწოდებელი საქართველოში. ვმუშაობთ 2015 წლიდან.</p>
+        <div class="soc"><div class="sc">f</div><div class="sc">in</div><div class="sc">📸</div></div>
+      </div>
+      <div class="fc"><h4>კომპანია</h4><ul><li><a href="#">ჩვენს შესახებ</a></li><li><a href="#">კარიერა</a></li><li><a href="#">პარტნიორობა</a></li></ul></div>
+      <div class="fc"><h4>მხარდაჭერა</h4><ul><li><a href="#">FAQ</a></li><li><a href="index.html">კატალოგი</a></li><li><a href="#">კონტაქტი</a></li></ul></div>
+      <div class="fc"><h4>კონტაქტი</h4>
+        <div class="cline"><span class="cico">📞</span><span class="ctxt">+995 555 000 000</span></div>
+        <div class="cline"><span class="cico">✉️</span><span class="ctxt">info@brands.ge</span></div>
+        <div class="cline"><span class="cico">⏰</span><span class="ctxt">ორშ–შაბ: 09:00–18:00</span></div>
+      </div>
+    </div>
+    <div class="fbot"><span>© 2025 BRAND S</span><span>კონფიდენციალობა · პირობები</span></div>
+  </footer>
+  `;
+}
+
+function renderNotFound(){
+  document.getElementById('main-content').innerHTML=`
+  <div class="nf">
+    <div style="font-size:64px;margin-bottom:20px">🔍</div>
+    <h2>პროდუქტი ვერ მოიძებნა</h2>
+    <p>მოთხოვნილი პროდუქტი არ არსებობს ან წაიშალა.</p>
+    <a href="index.html" class="btn-back">← კატალოგში დაბრუნება</a>
+  </div>`;
+}
+
+// ── TAB SWITCHING ─────────────────────────────────────────────
+function showTab(id,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.tab-pane').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('tab-'+id).classList.add('on');
+}
+
+// ── WISHLIST ──────────────────────────────────────────────────
+function toggleWish(id){
+  const btn=document.getElementById('wish-btn');
+  if(wish.has(id)){wish.delete(id);btn.innerHTML='🤍';btn.classList.remove('on')}
+  else{wish.add(id);btn.innerHTML='❤️';btn.classList.add('on');showToast('რჩეულებში დაემატა ❤️')}
+}
+
+// ── EVENTS ────────────────────────────────────────────────────
+document.getElementById('cbtn').addEventListener('click',openCart);
+document.getElementById('cscl').addEventListener('click',closeCart);
+document.getElementById('ov').addEventListener('click',closeCart);
+
+// ── INIT ──────────────────────────────────────────────────────
+const id=+new URLSearchParams(location.search).get('id');
+const product=P.find(p=>p.id===id);
+product?renderProduct(product):renderNotFound();
+updateCart();
+</script>
+</body>
+</html>
