@@ -238,21 +238,17 @@ ul{list-style:none}
 <header class="header">
   <div class="hi">
     <a href="index.html" class="logo-w">
-      <img src="images/logo.png" alt="BRAND S" style="height:46px;width:auto"
-           onerror="this.style.display='none';document.getElementById('logo-fb').style.display='flex'">
-      <div id="logo-fb" style="display:none;align-items:center;gap:10px">
-        <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
-          <path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#1B3A6B" stroke-width="16" stroke-linecap="round"/>
-          <path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="16" stroke-linecap="round"/>
-          <line x1="14" y1="14" x2="22" y2="14" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="12" y1="20" x2="22" y2="20" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="14" y1="26" x2="22" y2="26" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="78" y1="74" x2="86" y2="74" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="78" y1="80" x2="88" y2="80" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-          <line x1="78" y1="86" x2="86" y2="86" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
-        </svg>
-        <div class="logo-t"><div class="bn">BRAND <span>S</span></div><div class="tg">ელექტრო პროდუქტები</div></div>
-      </div>
+      <svg width="44" height="44" viewBox="0 0 100 100" fill="none">
+        <path d="M72 22C72 22 72 10 58 10C44 10 28 10 28 26C28 42 44 44 58 44C70 44 70 56 58 56C46 56 28 56 28 56" stroke="#1B3A6B" stroke-width="16" stroke-linecap="round"/>
+        <path d="M28 56C28 56 28 68 42 68C56 68 72 68 72 74C72 80 72 90 58 90C44 90 28 90 28 78" stroke="#F9A800" stroke-width="16" stroke-linecap="round"/>
+        <line x1="14" y1="14" x2="22" y2="14" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="12" y1="20" x2="22" y2="20" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="14" y1="26" x2="22" y2="26" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="78" y1="74" x2="86" y2="74" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="78" y1="80" x2="88" y2="80" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="78" y1="86" x2="86" y2="86" stroke="#C44A1A" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div class="logo-t"><div class="bn">BRAND <span>S</span></div><div class="tg">ელექტრო პროდუქტები</div></div>
     </a>
     <div class="search">
       <input type="text" placeholder="მოძებნე პროდუქტი...">
@@ -284,17 +280,10 @@ ul{list-style:none}
 
 <script>
 // ── IMAGES ────────────────────────────────────────────────────
-const IMGS={
-  breaker:  'https://placehold.co/500x500/EBF0FA/1B3A6B?text=⚡',
-  connector:'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔗',
-  socket:   'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔌',
-  switch:   'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔌',
-  cable:    'https://placehold.co/500x500/EBF0FA/1B3A6B?text=〰',
-  panel:    'https://placehold.co/500x500/EBF0FA/1B3A6B?text=📦',
-  extension:'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔋',
-};
+const PH="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Crect width='400' height='400' fill='%23EBF0FA'/%3E%3C/svg%3E";
+const IMGS={breaker:PH,connector:PH,socket:PH,switch:PH,cable:PH,panel:PH,extension:PH};
 const PIMG={};
-function img(p){return PIMG[p.id]||IMGS[p.t]||'https://placehold.co/500x500/EBF0FA/1B3A6B?text=?'}
+function img(p){return PIMG[p.id]||IMGS[p.t]||PH}
 
 // ── ALL 100 PRODUCTS ──────────────────────────────────────────
 const P=[
