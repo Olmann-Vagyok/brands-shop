@@ -458,9 +458,17 @@ ul{list-style:none}
 
 <script>
 // ── IMAGES ────────────────────────────────────────────────────
-const PH='data:image/svg+xml;base64,'+btoa('<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"><rect width="400" height="400" fill="#EBF0FA"/></svg>');
-const IMGS={breaker:PH,connector:PH,socket:PH,switch:PH,cable:PH,panel:PH,extension:PH};
+const IMGS={
+  breaker:  'https://picsum.photos/seed/breaker/400/400',
+  connector:'https://picsum.photos/seed/connector/400/400',
+  socket:   'https://picsum.photos/seed/socket/400/400',
+  switch:   'https://picsum.photos/seed/switch/400/400',
+  cable:    'https://picsum.photos/seed/cable/400/400',
+  panel:    'https://picsum.photos/seed/panel/400/400',
+  extension:'https://picsum.photos/seed/extension/400/400',
+};
 const PIMG={};
+const PH='https://picsum.photos/seed/product/400/400';
 function img(p){return PIMG[p.id]||IMGS[p.t]||PH}
 
 // ── 100 PRODUCTS (from el-ss.ge) ──────────────────────────────
