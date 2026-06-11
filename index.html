@@ -59,7 +59,7 @@ ul{list-style:none}
 .hero{position:relative;min-height:460px;background:linear-gradient(130deg,var(--blue-dk) 0%,var(--blue) 55%,#1E4B8A 100%);display:flex;align-items:center;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:20px 20px}
 .hglow{position:absolute;right:-40px;top:-60px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(249,168,0,.18) 0%,transparent 70%)}
-.hc{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:50px 28px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+.hc{position:relative;z-index:1;width:100%;max-width:1400px;margin:0 auto;padding:50px 28px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
 .htag{display:inline-flex;align-items:center;gap:8px;background:rgba(249,168,0,.15);border:1px solid rgba(249,168,0,.3);color:var(--yellow);font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:40px;margin-bottom:18px}
 .hero h1{font-size:44px;font-weight:800;color:#fff;line-height:1.08;margin-bottom:16px}
 .hero h1 span{color:var(--yellow)}
@@ -461,25 +461,18 @@ ul{list-style:none}
 <div class="toast" id="toast"></div>
 
 <script>
-// ── IMAGES (real el-ss.ge product photos) ────────────────────
-const B='https://el-ss.ge/upload/66/image/product/500x500/';
+// ── IMAGES ────────────────────────────────────────────────────
 const IMGS={
-  breaker:  B+'c90cd2f1-b852-45d1-a8be-c14cb0a68ad5-71fae5a2371a63ce.webp',
-  connector:B+'ea5083f0-2fe9-4bcf-8fe2-ac7b08eddf5d-ff594a47a9c61818.png',
-  socket:   B+'c52fa89c-516a-4c27-84b0-5a6e873a2626-c81624dce4ac4049.png',
-  switch:   B+'c52fa89c-516a-4c27-84b0-5a6e873a2626-c81624dce4ac4049.png',
-  cable:    B+'e1d91a6f-a98c-4f8f-b6aa-bd04a4c7c46b-45206550938806e6.png',
-  panel:    B+'71d5114c-4872-482c-b5f8-f88236f28140-902239f188506541.png',
-  extension:B+'e63c2113-9de9-4903-9f1f-693e79f0fa15-6c63fc17ed33c0cc.png',
+  breaker:  'https://placehold.co/500x500/EBF0FA/1B3A6B?text=⚡',
+  connector:'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔗',
+  socket:   'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔌',
+  switch:   'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔌',
+  cable:    'https://placehold.co/500x500/EBF0FA/1B3A6B?text=〰',
+  panel:    'https://placehold.co/500x500/EBF0FA/1B3A6B?text=📦',
+  extension:'https://placehold.co/500x500/EBF0FA/1B3A6B?text=🔋',
 };
-// per-product overrides where we have a unique image
-const PIMG={
-  36:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
-  37:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
-  76:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
-  77:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
-};
-function img(p){return PIMG[p.id]||IMGS[p.t]}
+const PIMG={};
+function img(p){return PIMG[p.id]||IMGS[p.t]||'https://placehold.co/500x500/EBF0FA/1B3A6B?text=?'}
 
 // ── 100 PRODUCTS (from el-ss.ge) ──────────────────────────────
 const P=[
