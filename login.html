@@ -189,6 +189,7 @@ footer{background:#0F1F3D;color:rgba(255,255,255,.4);text-align:center;padding:1
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="js/auth.js"></script>
 
 <script>
@@ -244,11 +245,30 @@ function firebaseErr(code) {
   return msgs[code] || 'შეცდომა: ' + code;
 }
 
+// ── SAVE PROFILE TO FIRESTORE ─────────────────────────────────
+// Writes the signed-in user into the `users` collection so they
+// appear in the admin "customers" list. Never blocks the redirect.
+function saveUserProfile(user) {
+  if (!user) return Promise.resolve();
+  try {
+    const db = firebase.firestore();
+    return db.collection('users').doc(user.uid).set({
+      uid:         user.uid,
+      displayName: user.displayName || '',
+      email:       user.email || '',
+      photoURL:    user.photoURL || '',
+      provider:    (user.providerData[0] && user.providerData[0].providerId) || 'password',
+      createdAt:   firebase.firestore.FieldValue.serverTimestamp()
+    }, { merge: true }).catch(() => {});
+  } catch (e) { return Promise.resolve(); }
+}
+
 // ── GOOGLE ────────────────────────────────────────────────────
 function signInGoogle() {
   if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
   const provider = new firebase.auth.GoogleAuthProvider();
   firebase.auth().signInWithPopup(provider)
+    .then(result => saveUserProfile(result.user))
     .then(() => { window.location.href = 'index.html'; })
     .catch(e => showErr(firebaseErr(e.code)));
 }
@@ -264,6 +284,7 @@ function submitLogin(e) {
   btn.disabled = true; btn.textContent = 'მიმდინარეობს...';
 
   firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(result => saveUserProfile(result.user))
     .then(() => { window.location.href = 'index.html'; })
     .catch(e => {
       showErr(firebaseErr(e.code));
@@ -291,7 +312,8 @@ function submitRegister(e) {
   btn.disabled = true; btn.textContent = 'იქმნება...';
 
   firebase.auth().createUserWithEmailAndPassword(email, pass)
-    .then(result => result.user.updateProfile({ displayName: name }))
+    .then(result => result.user.updateProfile({ displayName: name })
+      .then(() => saveUserProfile(firebase.auth().currentUser)))
     .then(() => { window.location.href = 'index.html'; })
     .catch(e => {
       showErr(firebaseErr(e.code));

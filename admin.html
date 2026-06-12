@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — BRAND S</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --sb:#162D3D;--sb-h:rgba(255,255,255,.08);--sb-a:rgba(249,168,0,.15);
+  --blue:#1B3A6B;--blue-dk:#122850;--yellow:#F9A800;--yellow-dk:#D48E00;
+  --orange:#C44A1A;--red:#E03131;--green:#2B7A3A;
+  --bg:#F0F4F7;--white:#fff;--border:#DDE3EE;
+  --text:#1B2D52;--mid:#4A5568;--light:#8A94A6;
+  --shadow:0 2px 8px rgba(0,0,0,.08);--r:8px;--t:.2s ease;
+  --sb-w:240px;--tb-h:60px;
+}
+body{font-family:'Noto Sans Georgian','Inter',sans-serif;background:var(--bg);color:var(--text);display:flex;min-height:100vh}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+input,select,textarea{font-family:inherit}
+ul{list-style:none}
+
+/* ── SIDEBAR ── */
+.sb{width:var(--sb-w);min-height:100vh;background:var(--sb);position:fixed;top:0;left:0;display:flex;flex-direction:column;z-index:200;transition:transform var(--t)}
+.sb-logo{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:10px}
+.sb-logo img{height:36px;width:auto}
+.sb-logo-txt{font-size:14px;font-weight:800;color:#fff;letter-spacing:1.5px}
+.sb-logo-txt span{color:var(--yellow)}
+.sb-logo-sub{font-size:9px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px}
+.sb-nav{flex:1;padding:10px 0;overflow-y:auto}
+.sb-nav::-webkit-scrollbar{display:none}
+.sb-group{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase;padding:14px 20px 5px}
+.sb-item{display:flex;align-items:center;gap:11px;padding:10px 12px;margin:2px 8px;border-radius:8px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);cursor:pointer;transition:all var(--t)}
+.sb-item:hover{background:var(--sb-h);color:#fff}
+.sb-item.on{background:var(--sb-a);color:var(--yellow);font-weight:600}
+.sb-item .ico{font-size:15px;width:20px;text-align:center;flex-shrink:0}
+.sb-item .badge-cnt{margin-left:auto;background:var(--yellow);color:var(--blue-dk);font-size:10px;font-weight:800;padding:2px 7px;border-radius:20px}
+.sb-footer{padding:12px;border-top:1px solid rgba(255,255,255,.08)}
+.sb-user{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;cursor:pointer;transition:background var(--t)}
+.sb-user:hover{background:var(--sb-h)}
+.sb-avatar{width:32px;height:32px;border-radius:50%;background:var(--yellow);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:var(--blue);flex-shrink:0;overflow:hidden}
+.sb-uname{font-size:12.5px;font-weight:600;color:#fff;line-height:1.2}
+.sb-uemail{font-size:10.5px;color:rgba(255,255,255,.4)}
+.sb-signout{display:flex;align-items:center;gap:8px;padding:9px 12px;margin:4px 8px 0;border-radius:8px;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;transition:all var(--t)}
+.sb-signout:hover{background:rgba(224,49,49,.15);color:#ff8080}
+
+/* ── MAIN ── */
+.main{margin-left:var(--sb-w);flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:var(--tb-h);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.topbar-left{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--light)}
+.topbar-left .page-title{font-size:16px;font-weight:800;color:var(--text)}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.content{padding:24px;flex:1}
+
+/* ── SECTION ── */
+.sec{display:none}.sec.on{display:block}
+
+/* ── STAT CARDS ── */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:#fff;border-radius:var(--r);padding:18px;border:1px solid var(--border)}
+.stat-ico{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;margin-bottom:12px}
+.stat-ico.blue{background:rgba(27,58,107,.08)}
+.stat-ico.yellow{background:rgba(249,168,0,.12)}
+.stat-ico.green{background:rgba(43,122,58,.08)}
+.stat-ico.orange{background:rgba(196,74,26,.1)}
+.stat-num{font-size:26px;font-weight:800;color:var(--text);line-height:1;margin-bottom:4px}
+.stat-lbl{font-size:11px;color:var(--light);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:var(--r);border:1px solid var(--border);overflow:hidden;margin-bottom:20px}
+.card-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border)}
+.card-title{font-size:15px;font-weight:800;color:var(--text)}
+
+/* ── TABLE ── */
+.tbar{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border);flex-wrap:wrap}
+.tsearch{display:flex;align-items:center;gap:7px;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;min-width:260px;transition:border-color var(--t)}
+.tsearch:focus-within{border-color:var(--yellow)}
+.tsearch input{border:none;outline:none;font-size:13px;flex:1;color:var(--text);background:transparent}
+.tfilter select{border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;font-size:13px;outline:none;color:var(--text);cursor:pointer}
+table{width:100%;border-collapse:collapse}
+thead th{padding:11px 16px;font-size:11px;font-weight:700;color:var(--light);text-transform:uppercase;letter-spacing:.5px;text-align:left;background:#F8FAFC;border-bottom:1px solid var(--border);white-space:nowrap}
+tbody td{padding:12px 16px;font-size:13px;color:var(--text);border-bottom:1px solid #F0F4F7;vertical-align:middle}
+tbody tr:hover td{background:#FAFBFD}
+tbody tr:last-child td{border-bottom:none}
+.prod-img{width:44px;height:44px;border-radius:7px;object-fit:contain;background:#F0F4F7;padding:4px;border:1px solid var(--border)}
+.tprice{font-weight:700;color:var(--blue)}
+.tprice-old{font-size:11px;color:var(--light);text-decoration:line-through;margin-left:4px}
+.row-actions{display:flex;gap:5px}
+.empty-row td{text-align:center;padding:40px;color:var(--light);font-size:14px}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:inherit;white-space:nowrap}
+.btn-primary{background:var(--blue);color:#fff}
+.btn-primary:hover{background:var(--yellow);color:var(--blue-dk)}
+.btn-yellow{background:var(--yellow);color:var(--blue-dk)}
+.btn-yellow:hover{background:var(--yellow-dk)}
+.btn-ghost{background:transparent;border:1.5px solid var(--border);color:var(--mid)}
+.btn-ghost:hover{border-color:var(--blue);color:var(--blue)}
+.btn-danger{background:rgba(224,49,49,.08);color:var(--red);border:1px solid transparent}
+.btn-danger:hover{background:var(--red);color:#fff}
+.btn-sm{padding:6px 11px;font-size:12px;border-radius:6px}
+.btn-icon{padding:7px;border-radius:6px}
+
+/* ── BADGE ── */
+.bdg{display:inline-block;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.bdg-sale{background:rgba(224,49,49,.1);color:var(--red)}
+.bdg-new{background:rgba(27,58,107,.1);color:var(--blue)}
+.bdg-hot{background:rgba(196,74,26,.1);color:var(--orange)}
+.bdg-promo{background:rgba(249,168,0,.15);color:var(--yellow-dk)}
+.bdg-none{background:#F0F4F7;color:var(--light)}
+
+/* ── MODAL ── */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:500;display:none;align-items:center;justify-content:center}
+.ov.open{display:flex}
+.modal{background:#fff;border-radius:14px;width:580px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:20px 24px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#fff;z-index:1}
+.modal-h h3{font-size:17px;font-weight:800}
+.modal-x{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:var(--light);transition:all var(--t);border:none;background:none}
+.modal-x:hover{background:var(--bg);color:var(--text)}
+.modal-b{padding:22px 24px}
+.modal-f{padding:14px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:#fff}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-full{grid-column:1/-1}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.field input,.field select{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:7px;font-size:13.5px;outline:none;transition:border-color var(--t);color:var(--text)}
+.field input:focus,.field select:focus{border-color:var(--yellow)}
+
+/* ── CONFIRM ── */
+.conf-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:600;display:none;align-items:center;justify-content:center}
+.conf-ov.open{display:flex}
+.conf-box{background:#fff;border-radius:14px;padding:30px;max-width:340px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.conf-box .conf-ico{font-size:44px;margin-bottom:14px}
+.conf-box h3{font-size:17px;font-weight:800;margin-bottom:8px}
+.conf-box p{font-size:13px;color:var(--mid);margin-bottom:22px;line-height:1.6}
+.conf-btns{display:flex;gap:10px;justify-content:center}
+
+/* ── PAGINATION ── */
+.pag{display:flex;align-items:center;gap:4px;padding:14px 18px;border-top:1px solid var(--border)}
+.pag-btn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid var(--border);background:#fff;color:var(--mid);transition:all var(--t)}
+.pag-btn:hover{border-color:var(--blue);color:var(--blue)}
+.pag-btn.on{background:var(--blue);color:#fff;border-color:var(--blue)}
+.pag-info{font-size:13px;color:var(--light);margin-left:auto}
+
+/* ── AUTH GATE ── */
+.gate{min-height:100vh;width:100%;display:flex;align-items:center;justify-content:center;background:var(--bg)}
+.gate-card{background:#fff;border-radius:16px;padding:44px;text-align:center;max-width:380px;width:100%;box-shadow:0 8px 40px rgba(0,0,0,.1)}
+.gate-card h2{font-size:22px;font-weight:800;margin-bottom:10px}
+.gate-card p{font-size:14px;color:var(--mid);margin-bottom:24px;line-height:1.6}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;background:var(--blue-dk);color:#fff;padding:12px 20px;border-radius:10px;font-size:13.5px;font-weight:500;z-index:9999;opacity:0;transform:translateY(10px);transition:all .25s ease;pointer-events:none;border-left:4px solid var(--yellow)}
+.toast.show{opacity:1;transform:translateY(0)}
+
+/* ── STATUS CHIPS ── */
+.status{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700}
+.status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor}
+.status-active{background:rgba(43,122,58,.1);color:var(--green)}
+.status-pending{background:rgba(249,168,0,.15);color:var(--yellow-dk)}
+.status-new{background:rgba(27,58,107,.1);color:var(--blue)}
+
+@media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.sb{transform:translateX(-100%)}.main{margin-left:0}}
+</style>
+</head>
+<body>
+
+<!-- AUTH GATE (shown while checking) -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <div style="font-size:48px;margin-bottom:16px">🔐</div>
+    <h2>ადმინ პანელი</h2>
+    <p>გთხოვთ დაელოდოთ...</p>
+  </div>
+</div>
+
+<!-- ADMIN LAYOUT (hidden until auth confirmed) -->
+<div id="app" style="display:none;width:100%;display:none">
+
+<!-- SIDEBAR -->
+<aside class="sb">
+  <div class="sb-logo">
+    <img src="images/logo.svg" alt="BRAND S">
+    <div><div class="sb-logo-txt">BRAND <span>S</span></div><div class="sb-logo-sub">Admin Panel</div></div>
+  </div>
+
+  <nav class="sb-nav">
+    <div class="sb-group">მთავარი</div>
+    <div class="sb-item on" onclick="go('dashboard',this)"><span class="ico">📊</span> Dashboard</div>
+
+    <div class="sb-group">კატალოგი</div>
+    <div class="sb-item" onclick="go('products',this)"><span class="ico">📦</span> პროდუქტები <span class="badge-cnt" id="sb-prod-cnt">100</span></div>
+    <div class="sb-item" onclick="go('orders',this)"><span class="ico">🛒</span> შეკვეთები</div>
+
+    <div class="sb-group">მომხმარებლები</div>
+    <div class="sb-item" onclick="go('customers',this)"><span class="ico">👥</span> კლიენტები</div>
+
+    <div class="sb-group">სისტემა</div>
+    <div class="sb-item" onclick="go('settings',this)"><span class="ico">⚙️</span> პარამეტრები</div>
+    <div class="sb-item" onclick="window.open('index.html','_blank')"><span class="ico">🌐</span> საიტი</div>
+  </nav>
+
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-avatar" id="sb-avatar">?</div>
+      <div>
+        <div class="sb-uname" id="sb-uname">—</div>
+        <div class="sb-uemail" id="sb-uemail">—</div>
+      </div>
+    </div>
+    <div class="sb-signout" onclick="doSignOut()"><span>🚪</span> გასვლა</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="page-title" id="page-title">Dashboard</span>
+    </div>
+    <div class="topbar-right">
+      <a href="index.html" target="_blank" class="btn btn-ghost btn-sm">🌐 საიტი</a>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── DASHBOARD ── -->
+    <div class="sec on" id="sec-dashboard">
+      <div class="stats">
+        <div class="stat"><div class="stat-ico blue">📦</div><div class="stat-num" id="d-prods">100</div><div class="stat-lbl">პროდუქტი</div></div>
+        <div class="stat"><div class="stat-ico yellow">🛒</div><div class="stat-num" id="d-orders">0</div><div class="stat-lbl">შეკვეთა</div></div>
+        <div class="stat"><div class="stat-ico green">👥</div><div class="stat-num" id="d-custs">0</div><div class="stat-lbl">კლიენტი</div></div>
+        <div class="stat"><div class="stat-ico orange">₾</div><div class="stat-num" id="d-rev">0</div><div class="stat-lbl">შემოსავალი</div></div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-head"><span class="card-title">⚡ სწრაფი მოქმედება</span></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+            <button class="btn btn-primary" onclick="go('products'); setTimeout(()=>openModal(),100)">+ ახალი პროდუქტი</button>
+            <button class="btn btn-ghost" onclick="go('orders')">🛒 შეკვეთების ნახვა</button>
+            <button class="btn btn-ghost" onclick="go('customers')">👥 კლიენტების ნახვა</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">📈 სისტემის სტატუსი</span></div>
+          <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <span>Firebase Auth</span><span class="status status-active">აქტიური</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <span>Firestore DB</span><span class="status status-active">აქტიური</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <span>Vercel Deploy</span><span class="status status-active">Online</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px">
+              <span>Google Sign-In</span><span class="status status-active">ჩართული</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title">🕐 ბოლო კლიენტები</span></div>
+        <table><thead><tr><th>სახელი</th><th>ელ-ფოსტა</th><th>რეგ. თარიღი</th><th>სტატუსი</th></tr></thead>
+        <tbody id="dash-custs"><tr class="empty-row"><td colspan="4">კლიენტები არ მოიძებნა</td></tr></tbody></table>
+      </div>
+    </div>
+
+    <!-- ── PRODUCTS ── -->
+    <div class="sec" id="sec-products">
+      <div class="card">
+        <div class="card-head">
+          <span class="card-title">📦 პროდუქტები</span>
+          <button class="btn btn-primary" onclick="openModal()">+ დამატება</button>
+        </div>
+        <div class="tbar">
+          <div class="tsearch">🔍 <input type="text" id="prod-search" placeholder="სახელი, SKU, ბრენდი..." oninput="renderProds()"></div>
+          <div class="tfilter">
+            <select id="prod-cat" onchange="renderProds()">
+              <option value="">ყველა კატეგორია</option>
+              <option>ავტ. ამომრთველი</option>
+              <option>კონექტორები</option>
+              <option>როზეტები & ჩამრთველები</option>
+              <option>სადენები</option>
+              <option>განაწ. ფარები</option>
+              <option>დამაგრძელებელები</option>
+            </select>
+          </div>
+          <div class="tfilter">
+            <select id="prod-badge" onchange="renderProds()">
+              <option value="">ყველა ბეჯი</option>
+              <option value="sale">ფასდაკლება</option>
+              <option value="new">ახალი</option>
+              <option value="hot">პოპულარი</option>
+            </select>
+          </div>
+          <span id="prod-count" style="font-size:12px;color:var(--light);margin-left:auto"></span>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>#</th><th>პროდუქტი</th><th>SKU</th><th>კატეგ.</th><th>ბრენდი</th><th>ფასი</th><th>ბეჯი</th><th>მოქმ.</th></tr></thead>
+            <tbody id="prod-tbody"></tbody>
+          </table>
+        </div>
+        <div class="pag" id="prod-pag"></div>
+      </div>
+    </div>
+
+    <!-- ── ORDERS ── -->
+    <div class="sec" id="sec-orders">
+      <div class="card">
+        <div class="card-head"><span class="card-title">🛒 შეკვეთები</span></div>
+        <div style="padding:48px;text-align:center;color:var(--light)">
+          <div style="font-size:52px;margin-bottom:16px">🛒</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">შეკვეთები არ არის</div>
+          <div style="font-size:13px">როდესაც კლიენტი შეძენას განახორციელებს, შეკვეთა აქ გამოჩნდება</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── CUSTOMERS ── -->
+    <div class="sec" id="sec-customers">
+      <div class="card">
+        <div class="card-head"><span class="card-title">👥 კლიენტები</span></div>
+        <table>
+          <thead><tr><th>სახელი</th><th>ელ-ფოსტა</th><th>შესვლის მეთოდი</th><th>რეგ. თარიღი</th><th>სტატუსი</th></tr></thead>
+          <tbody id="cust-tbody"><tr class="empty-row"><td colspan="5">კლიენტები ჯერ არ დარეგისტრირებულა</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── SETTINGS ── -->
+    <div class="sec" id="sec-settings">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+        <div class="card">
+          <div class="card-head"><span class="card-title">🏪 მაღაზიის ინფო</span></div>
+          <div class="modal-b" style="border:none">
+            <div class="field" style="margin-bottom:14px"><label>სახელი</label><input type="text" id="s-name" value="BRAND S"></div>
+            <div class="field" style="margin-bottom:14px"><label>ტელეფონი</label><input type="text" id="s-phone" value="+995 555 000 000"></div>
+            <div class="field" style="margin-bottom:14px"><label>ელ-ფოსტა</label><input type="email" id="s-email" value="info@brands.ge"></div>
+            <div class="field" style="margin-bottom:14px"><label>მისამართი</label><input type="text" id="s-addr" value="თბილისი, საქართველო"></div>
+            <button class="btn btn-primary" onclick="saveSettings()">💾 შენახვა</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><span class="card-title">🔐 ადმინ წვდომა</span></div>
+          <div class="modal-b" style="border:none">
+            <div style="font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.6">ადმინ პანელზე წვდომა აქვს მხოლოდ ქვემოთ მითითებული ელ-ფოსტების მქონე მომხმარებლებს.</div>
+            <div id="admin-emails" style="margin-bottom:16px"></div>
+            <div style="font-size:12px;color:var(--light)">ადმინების შესაცვლელად გახსენით <code>js/auth.js</code> და შეცვალეთ <code>ADMIN_EMAILS</code>.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><span class="card-title">🔗 Firebase პროექტი</span></div>
+        <div style="padding:18px;display:grid;grid-template-columns:repeat(3,1fr);gap:14px;font-size:13px">
+          <div><div style="font-weight:700;margin-bottom:4px;color:var(--mid);font-size:11px;text-transform:uppercase">Project ID</div><code style="font-size:12px">brand-x-94850</code></div>
+          <div><div style="font-weight:700;margin-bottom:4px;color:var(--mid);font-size:11px;text-transform:uppercase">Auth Domain</div><code style="font-size:12px">brand-x-94850.firebaseapp.com</code></div>
+          <div><div style="font-weight:700;margin-bottom:4px;color:var(--mid);font-size:11px;text-transform:uppercase">Vercel URL</div><code style="font-size:12px">brands-shop.vercel.app</code></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+</div><!-- /app -->
+
+<!-- PRODUCT MODAL -->
+<div class="ov" id="prod-modal">
+  <div class="modal">
+    <div class="modal-h">
+      <h3 id="modal-title">პროდუქტის დამატება</h3>
+      <button class="modal-x" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-b">
+      <input type="hidden" id="m-id">
+      <div class="form-grid">
+        <div class="field form-full"><label>სახელი (ქართ.)</label><input type="text" id="m-name" placeholder="Schneider Easy9 1პ 16ა"></div>
+        <div class="field"><label>SKU / კოდი</label><input type="text" id="m-sku" placeholder="EZ9F34116"></div>
+        <div class="field"><label>ბრენდი</label><input type="text" id="m-brand" placeholder="Schneider"></div>
+        <div class="field"><label>კატეგორია</label>
+          <select id="m-cat">
+            <option>ავტ. ამომრთველი</option>
+            <option>კონექტორები</option>
+            <option>როზეტები & ჩამრთველები</option>
+            <option>სადენები</option>
+            <option>განაწ. ფარები</option>
+            <option>დამაგრძელებელები</option>
+          </select>
+        </div>
+        <div class="field"><label>ფასი (₾)</label><input type="number" id="m-price" placeholder="8.50" step="0.01" min="0"></div>
+        <div class="field"><label>ძველი ფასი (₾, სურვ.)</label><input type="number" id="m-old" placeholder="10.00" step="0.01" min="0"></div>
+        <div class="field"><label>ბეჯი</label>
+          <select id="m-badge">
+            <option value="">— არ არის —</option>
+            <option value="new">ახალი</option>
+            <option value="sale">ფასდაკლება</option>
+            <option value="hot">პოპულარი</option>
+            <option value="promo">აქცია</option>
+          </select>
+        </div>
+        <div class="field"><label>სურათის ტიპი</label>
+          <select id="m-type">
+            <option value="breaker">ამომრთველი</option>
+            <option value="connector">კონექტორი</option>
+            <option value="socket">სოკეტი</option>
+            <option value="switch">ჩამრთველი</option>
+            <option value="cable">კაბელი</option>
+            <option value="panel">ფარი</option>
+            <option value="extension">დამაგრძელებელი</option>
+          </select>
+        </div>
+        <div class="field"><label>რეიტინგი</label><input type="number" id="m-rating" placeholder="4.8" step="0.1" min="1" max="5"></div>
+        <div class="field"><label>შეფასებების რ-ბა</label><input type="number" id="m-reviews" placeholder="100" min="0"></div>
+      </div>
+    </div>
+    <div class="modal-f">
+      <button class="btn btn-ghost" onclick="closeModal()">გაუქმება</button>
+      <button class="btn btn-primary" onclick="saveProduct()">💾 შენახვა</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONFIRM DIALOG -->
+<div class="conf-ov" id="conf-ov">
+  <div class="conf-box">
+    <div class="conf-ico">🗑️</div>
+    <h3>პროდუქტის წაშლა</h3>
+    <p id="conf-text">დარწმუნებული ხართ?</p>
+    <div class="conf-btns">
+      <button class="btn btn-ghost" onclick="closeConfirm()">გაუქმება</button>
+      <button class="btn btn-danger" onclick="confirmDelete()">წაშლა</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+// ── ADMIN EMAILS ──────────────────────────────────────────────
+const ADMIN_EMAILS = ['irakli@brandr.ge'];
+
+// ── DB ────────────────────────────────────────────────────────
+const db = firebase.firestore();
+
+// ── PRODUCTS DATA ─────────────────────────────────────────────
+let PRODUCTS = [
+ {id:1,  name:'Schneider Easy9 ამომრთ. 1პ 6ა',   sku:'EZ9F34106', cat:'ავტ. ამომრთველი', brand:'Schneider', price:7.50,  old:null,  badge:'hot',  r:4.9, rv:312, t:'breaker'},
+ {id:2,  name:'Schneider Easy9 ამომრთ. 1პ 10ა',  sku:'EZ9F34110', cat:'ავტ. ამომრთველი', brand:'Schneider', price:8.00,  old:null,  badge:null,   r:4.9, rv:287, t:'breaker'},
+ {id:3,  name:'Schneider Easy9 ამომრთ. 1პ 16ა',  sku:'EZ9F34116', cat:'ავტ. ამომრთველი', brand:'Schneider', price:8.50,  old:null,  badge:null,   r:4.9, rv:445, t:'breaker'},
+ {id:4,  name:'Schneider Easy9 ამომრთ. 1პ 20ა',  sku:'EZ9F34120', cat:'ავტ. ამომრთველი', brand:'Schneider', price:9.00,  old:null,  badge:null,   r:4.8, rv:198, t:'breaker'},
+ {id:5,  name:'Schneider Easy9 ამომრთ. 1პ 25ა',  sku:'EZ9F34125', cat:'ავტ. ამომრთველი', brand:'Schneider', price:10.50, old:null,  badge:null,   r:4.8, rv:156, t:'breaker'},
+ {id:6,  name:'Schneider Easy9 ამომრთ. 1პ 32ა',  sku:'EZ9F34132', cat:'ავტ. ამომრთველი', brand:'Schneider', price:11.50, old:13.00, badge:'sale', r:4.8, rv:134, t:'breaker'},
+ {id:7,  name:'Schneider Easy9 ამომრთ. 1პ 40ა',  sku:'EZ9F34140', cat:'ავტ. ამომრთველი', brand:'Schneider', price:13.00, old:null,  badge:null,   r:4.7, rv:89,  t:'breaker'},
+ {id:8,  name:'Schneider Easy9 ამომრთ. 1პ 50ა',  sku:'EZ9F34150', cat:'ავტ. ამომრთველი', brand:'Schneider', price:15.50, old:null,  badge:null,   r:4.7, rv:67,  t:'breaker'},
+ {id:9,  name:'Schneider Easy9 ამომრთ. 1პ 63ა',  sku:'EZ9F34163', cat:'ავტ. ამომრთველი', brand:'Schneider', price:17.00, old:null,  badge:null,   r:4.7, rv:45,  t:'breaker'},
+ {id:10, name:'Legrand TX3 ამომრთ. 1პ 10ა',      sku:'403348',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:9.00,  old:11.00, badge:'sale', r:4.8, rv:203, t:'breaker'},
+ {id:11, name:'Legrand TX3 ამომრთ. 1პ 16ა',      sku:'403350',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:9.50,  old:12.00, badge:'sale', r:4.8, rv:178, t:'breaker'},
+ {id:12, name:'Legrand TX3 ამომრთ. 1პ 20ა',      sku:'403352',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:10.00, old:null,  badge:null,   r:4.7, rv:145, t:'breaker'},
+ {id:13, name:'Legrand TX3 ამომრთ. 2პ 16ა',      sku:'403493',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:24.00, old:null,  badge:'new',  r:4.8, rv:67,  t:'breaker'},
+ {id:14, name:'Legrand TX3 ამომრთ. 2პ 25ა',      sku:'403497',    cat:'ავტ. ამომრთველი', brand:'Legrand',   price:28.00, old:34.00, badge:'sale', r:4.8, rv:89,  t:'breaker'},
+ {id:15, name:'Hager MCN116 ამომრთ. 1პ 16ა',     sku:'MCN116',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:11.00, old:null,  badge:null,   r:4.7, rv:112, t:'breaker'},
+ {id:16, name:'Hager MCN120 ამომრთ. 1პ 20ა',     sku:'MCN120',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:12.00, old:null,  badge:null,   r:4.7, rv:98,  t:'breaker'},
+ {id:17, name:'Hager MCN125 ამომრთ. 1პ 25ა',     sku:'MCN125',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:13.50, old:null,  badge:null,   r:4.6, rv:76,  t:'breaker'},
+ {id:18, name:'Siemens 5SL6 ამომრთ. 1პ 16ა',     sku:'5SL61167',  cat:'ავტ. ამომრთველი', brand:'Siemens',   price:12.00, old:14.50, badge:'sale', r:4.9, rv:234, t:'breaker'},
+ {id:19, name:'Siemens 5SL6 ამომრთ. 1პ 25ა',     sku:'5SL61257',  cat:'ავტ. ამომრთველი', brand:'Siemens',   price:14.00, old:null,  badge:null,   r:4.9, rv:167, t:'breaker'},
+ {id:20, name:'Eaton PL6-C16 ამომრთ. 1პ 16ა',    sku:'PL6C16',    cat:'ავტ. ამომრთველი', brand:'Eaton',     price:10.50, old:null,  badge:'new',  r:4.6, rv:54,  t:'breaker'},
+ {id:21, name:'ABB SH200L ამომრთ. 1პ 16ა',       sku:'2CDS211001R0160',cat:'ავტ. ამომრთველი',brand:'ABB',   price:11.50, old:13.00, badge:'sale', r:4.8, rv:145, t:'breaker'},
+ {id:22, name:'ABB SH200L ამომრთ. 1პ 25ა',       sku:'2CDS211001R0250',cat:'ავტ. ამომრთველი',brand:'ABB',   price:13.00, old:null,  badge:null,   r:4.8, rv:123, t:'breaker'},
+ {id:23, name:'Schneider iDT60 ამომრთ. 2პ 25ა',  sku:'IDT60N225',  cat:'ავტ. ამომრთველი', brand:'Schneider', price:35.00, old:42.00, badge:'sale', r:4.9, rv:198, t:'breaker'},
+ {id:24, name:'Schneider Acti9 RCD 2პ 25ა 30mA', sku:'A9R44225',   cat:'ავტ. ამომრთველი', brand:'Schneider', price:68.00, old:null,  badge:'hot',  r:4.9, rv:312, t:'breaker'},
+ {id:25, name:'Hager CDA225D RCD 25ა 30mA',       sku:'CDA225D',    cat:'ავტ. ამომრთველი', brand:'Hager',     price:75.00, old:88.00, badge:'sale', r:4.8, rv:87,  t:'breaker'},
+ {id:26, name:'WAGO 221-412 კონექტ. 2-სადენი',   sku:'221-412',    cat:'კონექტორები',    brand:'WAGO',      price:1.20,  old:null,  badge:'hot',  r:5.0, rv:892, t:'connector'},
+ {id:27, name:'WAGO 221-413 კონექტ. 3-სადენი',   sku:'221-413',    cat:'კონექტორები',    brand:'WAGO',      price:1.50,  old:null,  badge:'hot',  r:5.0, rv:745, t:'connector'},
+ {id:28, name:'WAGO 221-415 კონექტ. 5-სადენი',   sku:'221-415',    cat:'კონექტორები',    brand:'WAGO',      price:2.20,  old:null,  badge:'hot',  r:5.0, rv:634, t:'connector'},
+ {id:29, name:'WAGO 2773-402 მინი 2-სადენი',      sku:'2773-402',   cat:'კონექტორები',    brand:'WAGO',      price:0.90,  old:1.10,  badge:'sale', r:4.9, rv:456, t:'connector'},
+ {id:30, name:'WAGO 2773-403 მინი 3-სადენი',      sku:'2773-403',   cat:'კონექტორები',    brand:'WAGO',      price:1.10,  old:1.35,  badge:'sale', r:4.9, rv:389, t:'connector'},
+ {id:31, name:'WAGO 224-112 6მმ² 2-სადენი',       sku:'224-112',    cat:'კონექტორები',    brand:'WAGO',      price:1.80,  old:null,  badge:null,   r:4.9, rv:267, t:'connector'},
+ {id:32, name:'WAGO 224-113 6მმ² 3-სადენი',       sku:'224-113',    cat:'კონექტორები',    brand:'WAGO',      price:2.20,  old:null,  badge:null,   r:4.8, rv:198, t:'connector'},
+ {id:33, name:'პლასტმ. ტერმინალი #1 (2.5-4მმ²)',  sku:'PLT-1',      cat:'კონექტორები',    brand:'—',         price:0.30,  old:null,  badge:null,   r:4.5, rv:134, t:'connector'},
+ {id:34, name:'პლასტმ. ტერმინალი #2 (4-6მმ²)',    sku:'PLT-2',      cat:'კონექტორები',    brand:'—',         price:0.35,  old:null,  badge:null,   r:4.5, rv:112, t:'connector'},
+ {id:35, name:'პლასტმ. ტერმინალი #3 (6-10მმ²)',   sku:'PLT-3',      cat:'კონექტორები',    brand:'—',         price:0.45,  old:null,  badge:null,   r:4.5, rv:89,  t:'connector'},
+ {id:36, name:'სპილენძის ბუნიკი DT 10მმ',          sku:'cable-lug-10mm',cat:'კონექტორები', brand:'—',         price:0.80,  old:null,  badge:null,   r:4.7, rv:167, t:'connector'},
+ {id:37, name:'სპილენძის ბუნიკი DT 16მმ',          sku:'cable-lug-16mm',cat:'კონექტორები', brand:'—',         price:0.90,  old:null,  badge:null,   r:4.7, rv:145, t:'connector'},
+ {id:38, name:'Legrand Niloe სოკეტი 2P+E',         sku:'LG-NIL-S2PE',cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:9.50,old:null,badge:'hot',r:4.8,rv:456,t:'socket'},
+ {id:39, name:'Legrand Niloe ჩამრთველი ერთიანი',   sku:'LG-NIL-CH1', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:7.50,old:null,badge:null, r:4.8,rv:389,t:'switch'},
+ {id:40, name:'Legrand Niloe ჩამრთველი ორმაგი',    sku:'LG-NIL-CH2', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:11.50,old:13.50,badge:'sale',r:4.7,rv:234,t:'switch'},
+ {id:41, name:'Legrand Niloe USB სოკეტი (A+C)',     sku:'LG-NIL-USB', cat:'როზეტები & ჩამრთველები',brand:'Legrand',price:22.00,old:null,badge:'new',r:4.9,rv:167,t:'socket'},
+ {id:42, name:'Simon 27 სოკეტი 2P+E',               sku:'SIM27-S2PE', cat:'როზეტები & ჩამრთველები',brand:'Simon',price:12.00,old:null,badge:null,r:4.8,rv:312,t:'socket'},
+ {id:43, name:'Simon 27 ჩამრთველი ერთიანი',         sku:'SIM27-CH1',  cat:'როზეტები & ჩამრთველები',brand:'Simon',price:9.50,old:null,badge:null,r:4.8,rv:267,t:'switch'},
+ {id:44, name:'Simon 27 ჩამქრობი ჩამრთველი',        sku:'SIM27-DIM',  cat:'როზეტები & ჩამრთველები',brand:'Simon',price:34.00,old:42.00,badge:'sale',r:4.7,rv:89,t:'switch'},
+ {id:45, name:'Simon 27 ტელ. სოკეტი RJ11',           sku:'SIM27-RJ11', cat:'როზეტები & ჩამრთველები',brand:'Simon',price:16.00,old:null,badge:null,r:4.6,rv:67,t:'socket'},
+ {id:46, name:'Simon 27 TV სოკეტი',                  sku:'SIM27-TV',   cat:'როზეტები & ჩამრთველები',brand:'Simon',price:18.00,old:null,badge:null,r:4.6,rv:54,t:'socket'},
+ {id:47, name:'Gunsan Visage სოკეტი 2P+E',           sku:'GUN-VIS-S',  cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:8.50,old:10.00,badge:'sale',r:4.6,rv:198,t:'socket'},
+ {id:48, name:'Gunsan Visage ჩამრთველი',              sku:'GUN-VIS-CH', cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:6.50,old:null,badge:null,r:4.5,rv:156,t:'switch'},
+ {id:49, name:'Gunsan Visage ორმაგი სოკეტი',          sku:'GUN-VIS-DS', cat:'როზეტები & ჩამრთველები',brand:'Gunsan',price:14.00,old:17.00,badge:'sale',r:4.5,rv:123,t:'socket'},
+ {id:50, name:'Nilson სოკეტი ჩასაშენებელი',           sku:'NIL-S',      cat:'როზეტები & ჩამრთველები',brand:'Nilson',price:5.50,old:null,badge:null,r:4.4,rv:89,t:'socket'},
+ {id:51, name:'Nilson ჩამრთველი ჩასაშენებელი',        sku:'NIL-CH',     cat:'როზეტები & ჩამრთველები',brand:'Nilson',price:4.50,old:null,badge:null,r:4.3,rv:78,t:'switch'},
+ {id:52, name:'Multisan MS-01 სოკეტი',                sku:'MS-01',      cat:'როზეტები & ჩამრთველები',brand:'Multisan',price:6.00,old:7.50,badge:'sale',r:4.4,rv:67,t:'socket'},
+ {id:53, name:'Multisan MS-02 ჩამრთველი',              sku:'MS-02',      cat:'როზეტები & ჩამრთველები',brand:'Multisan',price:5.00,old:null,badge:null,r:4.3,rv:56,t:'switch'},
+ {id:54, name:'Schneider Sedna სოკეტი 2P+E',          sku:'SDN1610121', cat:'როზეტები & ჩამრთველები',brand:'Schneider',price:14.00,old:null,badge:null,r:4.7,rv:134,t:'socket'},
+ {id:55, name:'Schneider Sedna ჩამრთველი',             sku:'SDN0100121', cat:'როზეტები & ჩამრთველები',brand:'Schneider',price:11.00,old:null,badge:null,r:4.7,rv:112,t:'switch'},
+ {id:56, name:'ABB Zenit სოკეტი 2P+E',                sku:'ABB-ZEN-S',  cat:'როზეტები & ჩამრთველები',brand:'ABB',price:16.00,old:19.00,badge:'sale',r:4.8,rv:167,t:'socket'},
+ {id:57, name:'ABB Zenit ჩამქრობი ჩამრთველი',          sku:'ABB-ZEN-DIM',cat:'როზეტები & ჩამრთველები',brand:'ABB',price:38.00,old:null,badge:'new',r:4.8,rv:89,t:'switch'},
+ {id:58, name:'FLAT-F 2×0.75 კაბელი (100მ)',  sku:'FF-2X075', cat:'სადენები',brand:'—',price:55.00,old:null,   badge:null,  r:4.6,rv:123,t:'cable'},
+ {id:59, name:'FLAT-F 2×1.5 კაბელი (100მ)',   sku:'FF-2X15',  cat:'სადენები',brand:'—',price:85.00,old:98.00, badge:'sale',r:4.7,rv:198,t:'cable'},
+ {id:60, name:'FLAT-F 2×2.5 კაბელი (100მ)',   sku:'FF-2X25',  cat:'სადენები',brand:'—',price:125.00,old:null,  badge:null,  r:4.7,rv:167,t:'cable'},
+ {id:61, name:'FLAT-F 2×4 კაბელი (100მ)',     sku:'FF-2X4',   cat:'სადენები',brand:'—',price:195.00,old:230.00,badge:'sale',r:4.7,rv:89, t:'cable'},
+ {id:62, name:'FLAT-F 3×1.5 კაბელი (100მ)',   sku:'FF-3X15',  cat:'სადენები',brand:'—',price:105.00,old:null,  badge:'hot', r:4.8,rv:312,t:'cable'},
+ {id:63, name:'FLAT-F 3×2.5 კაბელი (100მ)',   sku:'FF-3X25',  cat:'სადენები',brand:'—',price:155.00,old:178.00,badge:'sale',r:4.8,rv:267,t:'cable'},
+ {id:64, name:'FLAT-F 3×4 კაბელი (100მ)',     sku:'FF-3X4',   cat:'სადენები',brand:'—',price:235.00,old:null,  badge:null,  r:4.7,rv:89, t:'cable'},
+ {id:65, name:'FLAT-U 2×1.5 (100მ)',           sku:'FU-2X15',  cat:'სადენები',brand:'—',price:78.00,old:null,  badge:null,  r:4.6,rv:134,t:'cable'},
+ {id:66, name:'FLAT-U 2×2.5 (100მ)',           sku:'FU-2X25',  cat:'სადენები',brand:'—',price:115.00,old:135.00,badge:'sale',r:4.6,rv:112,t:'cable'},
+ {id:67, name:'FLAT-U 3×1.5 (100მ)',           sku:'FU-3X15',  cat:'სადენები',brand:'—',price:95.00,old:null,  badge:null,  r:4.6,rv:98, t:'cable'},
+ {id:68, name:'FLAT-U 3×2.5 (100მ)',           sku:'FU-3X25',  cat:'სადენები',brand:'—',price:140.00,old:165.00,badge:'sale',r:4.6,rv:87, t:'cable'},
+ {id:69, name:'PV-3 1×1.5 სადენი (100მ)',      sku:'PV3-1X15', cat:'სადენები',brand:'—',price:42.00,old:null,  badge:null,  r:4.5,rv:145,t:'cable'},
+ {id:70, name:'PV-3 1×2.5 სადენი (100მ)',      sku:'PV3-1X25', cat:'სადენები',brand:'—',price:68.00,old:null,  badge:null,  r:4.5,rv:123,t:'cable'},
+ {id:71, name:'PV-3 1×4 სადენი (100მ)',        sku:'PV3-1X4',  cat:'სადენები',brand:'—',price:105.00,old:120.00,badge:'sale',r:4.5,rv:89, t:'cable'},
+ {id:72, name:'N2XH 2×1.5 უჰალოგენო (100მ)',   sku:'N2XH-2X15',cat:'სადენები',brand:'—',price:145.00,old:null,  badge:'new', r:4.8,rv:67, t:'cable'},
+ {id:73, name:'Cat5e UTP კაბელი (305მ)',        sku:'CAT5E-UTP', cat:'სადენები',brand:'—',price:120.00,old:145.00,badge:'sale',r:4.7,rv:198,t:'cable'},
+ {id:74, name:'Cat5e FTP კაბელი (305მ)',        sku:'CAT5E-FTP', cat:'სადენები',brand:'—',price:145.00,old:null,  badge:null,  r:4.7,rv:156,t:'cable'},
+ {id:75, name:'Cat6e UTP კაბელი (305მ)',        sku:'CAT6E-UTP', cat:'სადენები',brand:'—',price:175.00,old:null,  badge:'hot', r:4.8,rv:234,t:'cable'},
+ {id:76, name:'2×0.75 რეტრო კაბელი (100მ)',    sku:'RETRO-075', cat:'სადენები',brand:'—',price:95.00,old:null,  badge:'new', r:4.9,rv:89, t:'cable'},
+ {id:77, name:'2×1.5 რეტრო კაბელი (100მ)',     sku:'RETRO-15',  cat:'სადენები',brand:'—',price:115.00,old:null, badge:'new', r:4.9,rv:67, t:'cable'},
+ {id:78, name:'Makel M-17 ფარი 2-მოდ. ზედ.',   sku:'MAKEL-M17', cat:'განაწ. ფარები',brand:'Makel',price:8.50,old:null,badge:null,r:4.6,rv:89, t:'panel'},
+ {id:79, name:'Makel M-18 ფარი 4-მოდ. ზედ.',   sku:'MAKEL-M18', cat:'განაწ. ფარები',brand:'Makel',price:11.00,old:13.00,badge:'sale',r:4.6,rv:123,t:'panel'},
+ {id:80, name:'Makel M-01 ფარი 2-მოდ. ჩას.',   sku:'MAKEL-M01', cat:'განაწ. ფარები',brand:'Makel',price:7.50,old:null,badge:null,r:4.6,rv:78, t:'panel'},
+ {id:81, name:'Makel M-02 ფარი 4-მოდ. ჩას.',   sku:'MAKEL-M02', cat:'განაწ. ფარები',brand:'Makel',price:10.00,old:null,badge:null,r:4.6,rv:67, t:'panel'},
+ {id:82, name:'Nilson M-09 ფარი 2-მოდ. ზედ.',  sku:'NIL-M09',   cat:'განაწ. ფარები',brand:'Nilson',price:7.00,old:8.50,badge:'sale',r:4.5,rv:56, t:'panel'},
+ {id:83, name:'Nilson M-10 ფარი 4-მოდ. ზედ.',  sku:'NIL-M10',   cat:'განაწ. ფარები',brand:'Nilson',price:9.50,old:null,badge:null,r:4.5,rv:45, t:'panel'},
+ {id:84, name:'Makel ABC კარადა 200×300×130',   sku:'ABC-200',   cat:'განაწ. ფარები',brand:'Makel',price:35.00,old:null,badge:'new',r:4.7,rv:34, t:'panel'},
+ {id:85, name:'Makel ABC კარადა 250×350×150',   sku:'ABC-250',   cat:'განაწ. ფარები',brand:'Makel',price:42.00,old:50.00,badge:'sale',r:4.7,rv:28, t:'panel'},
+ {id:86, name:'ლითონის კარადა 250×200×150',     sku:'METAL-250', cat:'განაწ. ფარები',brand:'—',price:55.00,old:null,badge:null,r:4.8,rv:45, t:'panel'},
+ {id:87, name:'ლითონის კარადა 300×250×150',     sku:'METAL-300', cat:'განაწ. ფარები',brand:'—',price:68.00,old:78.00,badge:'sale',r:4.8,rv:38, t:'panel'},
+ {id:88, name:'Hager Volta DP12 12-მოდ.',       sku:'HAG-DP12',  cat:'განაწ. ფარები',brand:'Hager',price:28.00,old:null,badge:'hot',r:4.8,rv:156,t:'panel'},
+ {id:89, name:'ABB MISTRAL65 24-მოდ.',          sku:'ABB-MIST',  cat:'განაწ. ფარები',brand:'ABB',price:48.00,old:58.00,badge:'sale',r:4.9,rv:123,t:'panel'},
+ {id:90, name:'EB-05 დამაგრძ. 3-სოკ. 5მ USB',  sku:'EB-05',cat:'დამაგრძელებელები',brand:'—',price:14.00,old:null,badge:null,r:4.6,rv:89, t:'extension'},
+ {id:91, name:'EB-06 დამაგრძ. 3-სოკ. 3მ',       sku:'EB-06',cat:'დამაგრძელებელები',brand:'—',price:11.00,old:14.00,badge:'sale',r:4.5,rv:123,t:'extension'},
+ {id:92, name:'EB-07 დამაგრძ. 4-სოკ. 3მ',       sku:'EB-07',cat:'დამაგრძელებელები',brand:'—',price:14.50,old:null,badge:null,r:4.6,rv:167,t:'extension'},
+ {id:93, name:'EB-08 დამაგრძ. 4-სოკ. 5მ',       sku:'EB-08',cat:'დამაგრძელებელები',brand:'—',price:18.00,old:22.00,badge:'sale',r:4.6,rv:145,t:'extension'},
+ {id:94, name:'EB-09 დამაგრძ. 5-სოკ. 3მ USB',  sku:'EB-09',cat:'დამაგრძელებელები',brand:'—',price:17.00,old:null,badge:null,r:4.7,rv:112,t:'extension'},
+ {id:95, name:'EB-10 დამაგრძ. 5-სოკ. 5მ მეხდ.',sku:'EB-10',cat:'დამაგრძელებელები',brand:'—',price:22.00,old:27.00,badge:'sale',r:4.7,rv:198,t:'extension'},
+ {id:96, name:'EB-11 დამაგრძ. 6-სოკ. 3მ',       sku:'EB-11',cat:'დამაგრძელებელები',brand:'—',price:19.00,old:null,badge:null,r:4.6,rv:89, t:'extension'},
+ {id:97, name:'EB-12 დამაგრძ. 6-სოკ. 5მ მეხდ.',sku:'EB-12',cat:'დამაგრძელებელები',brand:'—',price:26.00,old:32.00,badge:'sale',r:4.7,rv:134,t:'extension'},
+ {id:98, name:'გამანაწ. T-01 3-გამოსასვ.',       sku:'T-01', cat:'დამაგრძელებელები',brand:'—',price:5.50,old:null,badge:null,r:4.4,rv:67, t:'extension'},
+ {id:99, name:'გამანაწ. T-11 4-გამოსასვ.',       sku:'T-11', cat:'დამაგრძელებელები',brand:'—',price:7.50,old:9.00,badge:'sale',r:4.5,rv:89, t:'extension'},
+ {id:100,name:'ელ-ჩანგალი P-01 Schuko',          sku:'P-01', cat:'დამაგრძელებელები',brand:'—',price:3.50,old:null,badge:null,r:4.4,rv:45, t:'extension'},
+];
+
+// Load overrides from Firestore
+async function loadOverrides() {
+  try {
+    const snap = await db.collection('product_overrides').get();
+    snap.forEach(doc => {
+      const idx = PRODUCTS.findIndex(p => p.id === doc.id*1 || p.id === doc.id);
+      if (idx !== -1) Object.assign(PRODUCTS[idx], doc.data());
+      else PRODUCTS.push({...doc.data(), id: doc.id});
+    });
+  } catch(e) {}
+}
+
+// ── PAGINATION ────────────────────────────────────────────────
+let prodPage = 0;
+const PAGE = 20;
+
+function filtered() {
+  const q   = document.getElementById('prod-search').value.toLowerCase();
+  const cat = document.getElementById('prod-cat').value;
+  const bdg = document.getElementById('prod-badge').value;
+  return PRODUCTS.filter(p =>
+    (!q   || (p.name+p.sku+p.brand+p.cat).toLowerCase().includes(q)) &&
+    (!cat || p.cat === cat) &&
+    (!bdg || p.badge === bdg)
+  );
+}
+
+function renderProds() {
+  const f = filtered();
+  prodPage = 0;
+  renderPage(f);
+}
+
+const IMGS = {
+  breaker:'images/products/breaker.png', connector:'images/products/connector.png',
+  socket:'images/products/socket.png',   switch:'images/products/switch.png',
+  cable:'images/products/cable.png',     panel:'images/products/panel.png',
+  extension:'images/products/extension.png',
+};
+
+function renderPage(f) {
+  const slice = f.slice(prodPage*PAGE, prodPage*PAGE+PAGE);
+  const tbody = document.getElementById('prod-tbody');
+  document.getElementById('prod-count').textContent = `${f.length} პროდუქტი`;
+  document.getElementById('sb-prod-cnt').textContent = PRODUCTS.length;
+  document.getElementById('d-prods').textContent = PRODUCTS.length;
+
+  if (!slice.length) {
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">პროდუქტი ვერ მოიძებნა</td></tr>';
+  } else {
+    tbody.innerHTML = slice.map(p => `
+      <tr>
+        <td style="color:var(--light);font-size:12px">${p.id}</td>
+        <td>
+          <div style="display:flex;align-items:center;gap:10px">
+            <img src="${IMGS[p.t]||IMGS.breaker}" class="prod-img" alt="${p.name}">
+            <div>
+              <div style="font-weight:600;font-size:13px">${p.name}</div>
+              <div style="font-size:11px;color:var(--light);margin-top:1px">${p.brand}</div>
+            </div>
+          </div>
+        </td>
+        <td><code style="font-size:11px;background:#F0F4F7;padding:2px 6px;border-radius:4px">${p.sku}</code></td>
+        <td style="font-size:12px">${p.cat}</td>
+        <td style="font-size:12px">${p.brand}</td>
+        <td>
+          <span class="tprice">₾${p.price.toFixed(2)}</span>
+          ${p.old ? `<span class="tprice-old">₾${p.old}</span>` : ''}
+        </td>
+        <td>${p.badge ? `<span class="bdg bdg-${p.badge}">${{sale:'ფასდ.',new:'ახალი',hot:'პოპ.',promo:'აქცია'}[p.badge]}</span>` : '<span class="bdg bdg-none">—</span>'}</td>
+        <td>
+          <div class="row-actions">
+            <button class="btn btn-ghost btn-icon btn-sm" onclick="editProduct(${p.id})" title="რედაქტირება">✏️</button>
+            <button class="btn btn-danger btn-icon btn-sm" onclick="askDelete(${p.id},'${p.name.replace(/'/g,"\\'")}')">🗑️</button>
+          </div>
+        </td>
+      </tr>`).join('');
+  }
+
+  // Pagination
+  const pages = Math.ceil(f.length / PAGE);
+  const pag = document.getElementById('prod-pag');
+  if (pages <= 1) { pag.innerHTML = ''; return; }
+  let html = '';
+  for (let i = 0; i < pages; i++) {
+    html += `<div class="pag-btn${i===prodPage?' on':''}" onclick="goPage(${i},event)">${i+1}</div>`;
+  }
+  html += `<span class="pag-info">${prodPage*PAGE+1}–${Math.min((prodPage+1)*PAGE,f.length)} / ${f.length}</span>`;
+  pag.innerHTML = html;
+}
+
+function goPage(i, e) {
+  prodPage = i; renderPage(filtered());
+  e.currentTarget.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+let editingId = null;
+
+function openModal(id) {
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'პროდუქტის დამატება';
+  document.getElementById('m-id').value = '';
+  ['m-name','m-sku','m-brand','m-price','m-old','m-rating','m-reviews'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('m-badge').value = '';
+  document.getElementById('m-cat').value = 'ავტ. ამომრთველი';
+  document.getElementById('m-type').value = 'breaker';
+  document.getElementById('prod-modal').classList.add('open');
+}
+
+function editProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id); if (!p) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = 'პროდუქტის რედაქტირება';
+  document.getElementById('m-name').value    = p.name;
+  document.getElementById('m-sku').value     = p.sku;
+  document.getElementById('m-brand').value   = p.brand === '—' ? '' : p.brand;
+  document.getElementById('m-cat').value     = p.cat;
+  document.getElementById('m-price').value   = p.price;
+  document.getElementById('m-old').value     = p.old || '';
+  document.getElementById('m-badge').value   = p.badge || '';
+  document.getElementById('m-type').value    = p.t || 'breaker';
+  document.getElementById('m-rating').value  = p.r;
+  document.getElementById('m-reviews').value = p.rv;
+  document.getElementById('prod-modal').classList.add('open');
+}
+
+function closeModal() { document.getElementById('prod-modal').classList.remove('open'); }
+
+async function saveProduct() {
+  const name   = document.getElementById('m-name').value.trim();
+  const sku    = document.getElementById('m-sku').value.trim();
+  const brand  = document.getElementById('m-brand').value.trim() || '—';
+  const cat    = document.getElementById('m-cat').value;
+  const price  = parseFloat(document.getElementById('m-price').value);
+  const old    = parseFloat(document.getElementById('m-old').value) || null;
+  const badge  = document.getElementById('m-badge').value || null;
+  const t      = document.getElementById('m-type').value;
+  const r      = parseFloat(document.getElementById('m-rating').value) || 4.5;
+  const rv     = parseInt(document.getElementById('m-reviews').value) || 0;
+
+  if (!name || !sku || isNaN(price)) { showToast('⚠️ შეავსეთ სავალდებულო ველები'); return; }
+
+  const data = {name, sku, brand, cat, price, old, badge, t, r, rv};
+
+  if (editingId) {
+    const idx = PRODUCTS.findIndex(p => p.id === editingId);
+    if (idx !== -1) PRODUCTS[idx] = {...PRODUCTS[idx], ...data};
+    try { await db.collection('product_overrides').doc(String(editingId)).set(data); } catch(e) {}
+    showToast('✅ პროდუქტი განახლდა');
+  } else {
+    const newId = Math.max(...PRODUCTS.map(p=>p.id)) + 1;
+    PRODUCTS.push({id: newId, ...data});
+    try { await db.collection('product_overrides').doc(String(newId)).set({id: newId, ...data}); } catch(e) {}
+    showToast('✅ პროდუქტი დაემატა');
+  }
+
+  closeModal();
+  renderProds();
+}
+
+// ── DELETE ────────────────────────────────────────────────────
+let deleteId = null;
+function askDelete(id, name) {
+  deleteId = id;
+  document.getElementById('conf-text').textContent = `"${name}" — ნამდვილად წაშლოთ?`;
+  document.getElementById('conf-ov').classList.add('open');
+}
+function closeConfirm() { document.getElementById('conf-ov').classList.remove('open'); deleteId = null; }
+async function confirmDelete() {
+  if (!deleteId) return;
+  PRODUCTS = PRODUCTS.filter(p => p.id !== deleteId);
+  try { await db.collection('product_overrides').doc(String(deleteId)).delete(); } catch(e) {}
+  closeConfirm(); renderProds();
+  showToast('🗑️ პროდუქტი წაიშალა');
+}
+
+// ── CUSTOMERS ─────────────────────────────────────────────────
+async function loadCustomers() {
+  try {
+    const snap = await db.collection('users').orderBy('createdAt','desc').limit(50).get();
+    const rows = [];
+    snap.forEach(doc => rows.push(doc.data()));
+
+    document.getElementById('d-custs').textContent = rows.length;
+
+    const dashHtml = rows.slice(0,5).map(u => `<tr>
+      <td>${u.displayName||'—'}</td><td>${u.email||'—'}</td>
+      <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString('ka-GE') : '—'}</td>
+      <td><span class="status status-active">აქტიური</span></td>
+    </tr>`).join('') || '<tr class="empty-row"><td colspan="4">კლიენტები ჯერ არ არის</td></tr>';
+    document.getElementById('dash-custs').innerHTML = dashHtml;
+
+    const custHtml = rows.map(u => `<tr>
+      <td>${u.displayName||'—'}</td><td>${u.email||'—'}</td>
+      <td><span class="bdg ${u.provider==='google.com'?'bdg-new':'bdg-none'}">${u.provider==='google.com'?'Google':'Email'}</span></td>
+      <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString('ka-GE') : '—'}</td>
+      <td><span class="status status-active">აქტიური</span></td>
+    </tr>`).join('') || '<tr class="empty-row"><td colspan="5">კლიენტები ჯერ არ დარეგისტრირებულა</td></tr>';
+    document.getElementById('cust-tbody').innerHTML = custHtml;
+  } catch(e) {
+    console.log('Customers error:', e.message);
+  }
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────
+function saveSettings() {
+  const s = {
+    name:  document.getElementById('s-name').value,
+    phone: document.getElementById('s-phone').value,
+    email: document.getElementById('s-email').value,
+    addr:  document.getElementById('s-addr').value,
+  };
+  db.collection('settings').doc('store').set(s)
+    .then(() => showToast('✅ პარამეტრები შენახულია'))
+    .catch(() => showToast('⚠️ შენახვის შეცდომა'));
+}
+
+async function loadSettings() {
+  try {
+    const doc = await db.collection('settings').doc('store').get();
+    if (doc.exists) {
+      const s = doc.data();
+      document.getElementById('s-name').value  = s.name  || 'BRAND S';
+      document.getElementById('s-phone').value = s.phone || '+995 555 000 000';
+      document.getElementById('s-email').value = s.email || 'info@brands.ge';
+      document.getElementById('s-addr').value  = s.addr  || 'თბილისი, საქართველო';
+    }
+  } catch(e) {}
+  // Show admin emails
+  document.getElementById('admin-emails').innerHTML = ADMIN_EMAILS.map(e =>
+    `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border-radius:8px;margin-bottom:8px;font-size:13px;font-weight:600">
+      <span style="color:var(--green)">✓</span> ${e}
+    </div>`).join('');
+}
+
+// ── NAV ───────────────────────────────────────────────────────
+const titles = {dashboard:'Dashboard',products:'📦 პროდუქტები',orders:'🛒 შეკვეთები',customers:'👥 კლიენტები',settings:'⚙️ პარამეტრები'};
+function go(page, el) {
+  document.querySelectorAll('.sec').forEach(s => s.classList.remove('on'));
+  document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('on'));
+  document.getElementById('sec-'+page).classList.add('on');
+  document.getElementById('page-title').textContent = titles[page];
+  if (el) el.classList.add('on');
+  else {
+    document.querySelectorAll('.sb-item').forEach(item => {
+      if (item.getAttribute('onclick')?.includes(`'${page}'`)) item.classList.add('on');
+    });
+  }
+}
+
+// ── TOAST ─────────────────────────────────────────────────────
+let _tt;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+// ── SIGN OUT ──────────────────────────────────────────────────
+function doSignOut() {
+  firebase.auth().signOut().then(() => window.location.href = 'index.html');
+}
+
+// ── AUTH GATE ─────────────────────────────────────────────────
+firebase.auth().onAuthStateChanged(async user => {
+  const gate = document.getElementById('gate');
+  const app  = document.getElementById('app');
+
+  if (!user) {
+    gate.innerHTML = `<div class="gate-card">
+      <div style="font-size:48px;margin-bottom:16px">🔒</div>
+      <h2>წვდომა შეზღუდულია</h2>
+      <p>ადმინ პანელი მხოლოდ ავტორიზებული მომხმარებლებისთვისაა</p>
+      <a href="login.html" style="display:inline-block;margin-top:16px;padding:12px 28px;background:var(--blue);color:#fff;border-radius:8px;font-weight:700;font-size:14px">შესვლა →</a>
+    </div>`;
+    return;
+  }
+
+  if (!ADMIN_EMAILS.includes(user.email)) {
+    gate.innerHTML = `<div class="gate-card">
+      <div style="font-size:48px;margin-bottom:16px">⛔</div>
+      <h2>უფლება არ გაქვთ</h2>
+      <p>${user.email} — ეს ანგარიში ადმინი არ არის</p>
+      <a href="index.html" style="display:inline-block;margin-top:16px;padding:12px 28px;background:var(--blue);color:#fff;border-radius:8px;font-weight:700;font-size:14px">← საიტი</a>
+    </div>`;
+    return;
+  }
+
+  // ✅ Admin confirmed
+  gate.style.display = 'none';
+  app.style.display = 'flex';
+
+  // Set sidebar user info
+  const ini = (user.displayName || user.email || '?')[0].toUpperCase();
+  const av = document.getElementById('sb-avatar');
+  if (user.photoURL) av.innerHTML = `<img src="${user.photoURL}" style="width:100%;height:100%;object-fit:cover">`;
+  else av.textContent = ini;
+  document.getElementById('sb-uname').textContent  = user.displayName || 'Admin';
+  document.getElementById('sb-uemail').textContent = user.email;
+
+  // Save user to Firestore
+  try {
+    await db.collection('users').doc(user.uid).set({
+      uid: user.uid, displayName: user.displayName, email: user.email,
+      photoURL: user.photoURL, provider: user.providerData[0]?.providerId,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    }, {merge: true});
+  } catch(e) {}
+
+  await loadOverrides();
+  renderProds();
+  loadCustomers();
+  loadSettings();
+});
+</script>
+</body>
+</html>
