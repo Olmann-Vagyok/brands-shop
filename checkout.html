@@ -167,6 +167,9 @@ footer{background:#0F1F3D;color:rgba(255,255,255,.4);text-align:center;padding:1
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 <script src="js/auth.js"></script>
 
+<!-- EmailJS (free order notifications) -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <script>
 // ── IMAGES ────────────────────────────────────────────────────
 const IMGS={
@@ -228,14 +231,13 @@ function render(){
         <div class="card-h"><span class="num">2</span><h3>მიტანის მისამართი</h3></div>
         <div class="card-b">
           <div class="form-grid">
-            <div class="field"><label>ქალაქი <span class="req">*</span></label>
+            <div class="field full"><label>ქალაქი <span class="req">*</span></label>
               <select id="f-city">
                 <option>თბილისი</option><option>ბათუმი</option><option>ქუთაისი</option>
                 <option>რუსთავი</option><option>გორი</option><option>ზუგდიდი</option>
                 <option>ფოთი</option><option>თელავი</option><option>სხვა</option>
               </select>
             </div>
-            <div class="field"><label>საფოსტო ინდექსი</label><input type="text" id="f-zip" placeholder="0100"></div>
             <div class="field full"><label>მისამართი <span class="req">*</span></label><input type="text" id="f-addr" placeholder="ი. ჭავჭავაძის გამზ. 10, ბ. 5"></div>
             <div class="field full"><label>კომენტარი (სურვ.)</label><textarea id="f-note" placeholder="დამატებითი ინსტრუქცია კურიერისთვის..."></textarea></div>
           </div>
@@ -363,7 +365,6 @@ function placeOrder(){
       phone:     document.getElementById('f-phone').value.trim(),
       email:     document.getElementById('f-email').value.trim(),
       city:      document.getElementById('f-city').value,
-      zip:       document.getElementById('f-zip').value.trim(),
       address:   document.getElementById('f-addr').value.trim(),
       note:      document.getElementById('f-note').value.trim(),
     },
@@ -376,6 +377,7 @@ function placeOrder(){
 
   // Save to Firestore (falls back gracefully if offline)
   const finish=()=>{
+    sendOrderEmail(order);     // notify store + customer (free, EmailJS)
     saveCart([]);              // clear cart
     cart=[];
     showSuccess(orderId, order);
@@ -391,6 +393,56 @@ function placeOrder(){
   } else {
     finish();
   }
+}
+
+// ── EMAIL NOTIFICATION (EmailJS — free, client-side) ──────────
+// Setup: create a free account at https://emailjs.com, connect Gmail,
+// make a template, then paste the 3 IDs below. Until then it no-ops.
+const EMAILJS_PUBLIC_KEY  = 'PASTE_PUBLIC_KEY';
+const EMAILJS_SERVICE_ID  = 'PASTE_SERVICE_ID';
+const EMAILJS_TEMPLATE_ID = 'PASTE_TEMPLATE_ID';
+const STORE_EMAIL         = 'iraklicqvitaria@gmail.com'; // where you receive orders
+
+function emailConfigured(){
+  return typeof emailjs!=='undefined'
+    && EMAILJS_PUBLIC_KEY !== 'PASTE_PUBLIC_KEY';
+}
+
+// Initialize EmailJS once (only if you've pasted your public key)
+if(emailConfigured()){
+  try { emailjs.init(EMAILJS_PUBLIC_KEY); } catch(e){}
+}
+
+function sendOrderEmail(order){
+  if(!emailConfigured()) return;   // skip silently until configured
+  const c = order.customer;
+  const itemsText = order.items
+    .map(i=>`• ${i.name} (${i.sku||''}) — ${i.qty} ცალი × ₾${i.price} = ₾${(i.price*i.qty).toFixed(2)}`)
+    .join('\n');
+
+  const params = {
+    order_id:      order.orderId,
+    customer_name: `${c.firstName} ${c.lastName}`,
+    customer_phone:c.phone,
+    customer_email:c.email,
+    city:          c.city,
+    address:       c.address,
+    note:          c.note || '—',
+    payment:       order.payment==='cod' ? 'ნაღდი ანგარიშსწორება' : 'ბარათით',
+    items:         itemsText,
+    subtotal:      '₾'+order.subtotal.toFixed(2),
+    delivery:      order.delivery===0 ? 'უფასო' : '₾'+order.delivery.toFixed(2),
+    total:         '₾'+order.total.toFixed(2),
+    store_email:   STORE_EMAIL,
+    to_email:      STORE_EMAIL,   // store owner gets the order
+    reply_to:      c.email,
+  };
+
+  try {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(()=>console.log('Order email sent'))
+      .catch(e=>console.log('Email error:', e?.text||e));
+  } catch(e){ console.log('Email error:', e); }
 }
 
 // ── SUCCESS SCREEN ────────────────────────────────────────────
