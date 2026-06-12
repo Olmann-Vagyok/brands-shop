@@ -469,16 +469,16 @@ tbody tr:last-child td{border-bottom:none}
 // The admin signs in with a username + password. The username maps
 // to a dedicated Firebase account (create it in Firebase Console).
 // To use a different username, change ADMIN_USER + ADMIN_EMAIL below.
-const ADMIN_USER  = 'admin';              // what you type in the login box
-const ADMIN_EMAIL = 'admin@brands.ge';    // the Firebase account it maps to
-const ADMIN_EMAILS = [ADMIN_EMAIL];       // accounts allowed into the panel
+const ADMIN_USER  = 'admin';                       // what you type in the login box
+const ADMIN_EMAIL = 'iraklicqvitaria@gmail.com';   // the Firebase account it maps to
+const ADMIN_EMAILS = [ADMIN_EMAIL];                // accounts allowed into the panel
 
 // Turn the typed username into the admin email (accepts full email too)
 function userToEmail(u) {
   u = (u || '').trim().toLowerCase();
   if (u === ADMIN_USER) return ADMIN_EMAIL;
   if (u.includes('@'))   return u;
-  return u + '@brands.ge';
+  return ADMIN_EMAIL;
 }
 
 // ── DB ────────────────────────────────────────────────────────
