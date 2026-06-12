@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin — BRAND S</title>
+<title>Admin — BRAND X</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -198,8 +198,8 @@ tbody tr:last-child td{border-bottom:none}
 <!-- SIDEBAR -->
 <aside class="sb">
   <div class="sb-logo">
-    <img src="images/logo.svg" alt="BRAND S">
-    <div><div class="sb-logo-txt">BRAND <span>S</span></div><div class="sb-logo-sub">Admin Panel</div></div>
+    <img src="images/logo.svg" alt="BRAND X">
+    <div><div class="sb-logo-txt">BRAND <span>X</span></div><div class="sb-logo-sub">Admin Panel</div></div>
   </div>
 
   <nav class="sb-nav">
@@ -360,7 +360,7 @@ tbody tr:last-child td{border-bottom:none}
         <div class="card">
           <div class="card-head"><span class="card-title">🏪 მაღაზიის ინფო</span></div>
           <div class="modal-b" style="border:none">
-            <div class="field" style="margin-bottom:14px"><label>სახელი</label><input type="text" id="s-name" value="BRAND S"></div>
+            <div class="field" style="margin-bottom:14px"><label>სახელი</label><input type="text" id="s-name" value="BRAND X"></div>
             <div class="field" style="margin-bottom:14px"><label>ტელეფონი</label><input type="text" id="s-phone" value="+995 555 000 000"></div>
             <div class="field" style="margin-bottom:14px"><label>ელ-ფოსტა</label><input type="email" id="s-email" value="info@brands.ge"></div>
             <div class="field" style="margin-bottom:14px"><label>მისამართი</label><input type="text" id="s-addr" value="თბილისი, საქართველო"></div>
@@ -867,7 +867,7 @@ async function loadSettings() {
     const doc = await db.collection('settings').doc('store').get();
     if (doc.exists) {
       const s = doc.data();
-      document.getElementById('s-name').value  = s.name  || 'BRAND S';
+      document.getElementById('s-name').value  = s.name  || 'BRAND X';
       document.getElementById('s-phone').value = s.phone || '+995 555 000 000';
       document.getElementById('s-email').value = s.email || 'info@brands.ge';
       document.getElementById('s-addr').value  = s.addr  || 'თბილისი, საქართველო';
