@@ -2,12 +2,13 @@
 // 1. Go to https://console.firebase.google.com
 // 2. Create project → Add web app → copy config here
 const FIREBASE_CONFIG = {
-  apiKey:            "PASTE_YOUR_API_KEY",
-  authDomain:        "PASTE_YOUR_AUTH_DOMAIN",
-  projectId:         "PASTE_YOUR_PROJECT_ID",
-  storageBucket:     "PASTE_YOUR_STORAGE_BUCKET",
-  messagingSenderId: "PASTE_YOUR_MESSAGING_SENDER_ID",
-  appId:             "PASTE_YOUR_APP_ID"
+  apiKey:            "AIzaSyD8EcKze19EjAZiEH0QhC_OfUGYzUQXT6A",
+  authDomain:        "brand-x-94850.firebaseapp.com",
+  projectId:         "brand-x-94850",
+  storageBucket:     "brand-x-94850.firebasestorage.app",
+  messagingSenderId: "460267381491",
+  appId:             "1:460267381491:web:dc574f520a285d4301cd86",
+  measurementId:     "G-RXGKCFPDQN"
 };
 
 const FB_CONFIGURED = FIREBASE_CONFIG.apiKey !== "PASTE_YOUR_API_KEY";
