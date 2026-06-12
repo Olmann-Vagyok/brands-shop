@@ -330,11 +330,15 @@ tbody tr:last-child td{border-bottom:none}
     <!-- ── ORDERS ── -->
     <div class="sec" id="sec-orders">
       <div class="card">
-        <div class="card-head"><span class="card-title">🛒 შეკვეთები</span></div>
-        <div style="padding:48px;text-align:center;color:var(--light)">
-          <div style="font-size:52px;margin-bottom:16px">🛒</div>
-          <div style="font-size:15px;font-weight:700;margin-bottom:8px">შეკვეთები არ არის</div>
-          <div style="font-size:13px">როდესაც კლიენტი შეძენას განახორციელებს, შეკვეთა აქ გამოჩნდება</div>
+        <div class="card-head">
+          <span class="card-title">🛒 შეკვეთები</span>
+          <button class="btn btn-ghost btn-sm" onclick="loadOrders()">🔄 განახლება</button>
+        </div>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>შეკვეთა #</th><th>კლიენტი</th><th>კონტაქტი</th><th>ნივთები</th><th>თანხა</th><th>გადახდა</th><th>თარიღი</th><th>სტატუსი</th></tr></thead>
+            <tbody id="order-tbody"><tr class="empty-row"><td colspan="8">იტვირთება...</td></tr></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -793,6 +797,50 @@ async function loadCustomers() {
   }
 }
 
+// ── ORDERS ────────────────────────────────────────────────────
+async function loadOrders() {
+  const tbody = document.getElementById('order-tbody');
+  try {
+    const snap = await db.collection('orders').orderBy('createdAt','desc').limit(100).get();
+    const rows = [];
+    snap.forEach(doc => rows.push({_id:doc.id, ...doc.data()}));
+
+    // Dashboard stats
+    document.getElementById('d-orders').textContent = rows.length;
+    const revenue = rows.reduce((s,o)=>s+(o.total||0),0);
+    document.getElementById('d-rev').textContent = '₾'+revenue.toFixed(0);
+
+    if (!rows.length) {
+      tbody.innerHTML = '<tr class="empty-row"><td colspan="8">შეკვეთები ჯერ არ არის</td></tr>';
+      return;
+    }
+
+    const payLbl = {cod:'💵 ნაღდი', card:'💳 ბარათი'};
+    const statusLbl = {new:'ახალი', confirmed:'დადასტ.', shipped:'გზაშია', done:'დასრულდა'};
+    const statusCls = {new:'status-new', confirmed:'status-pending', shipped:'status-pending', done:'status-active'};
+
+    tbody.innerHTML = rows.map(o => {
+      const c = o.customer || {};
+      const itemCount = (o.items||[]).reduce((s,i)=>s+(i.qty||0),0);
+      const itemNames = (o.items||[]).map(i=>`${i.name} ×${i.qty}`).join(', ');
+      const date = o.createdAt && o.createdAt.toDate ? new Date(o.createdAt.toDate()).toLocaleString('ka-GE',{day:'2-digit',month:'2-digit',year:'2-digit',hour:'2-digit',minute:'2-digit'}) : '—';
+      return `<tr>
+        <td><code style="font-size:11px;background:#F0F4F7;padding:2px 7px;border-radius:4px;font-weight:700">${o.orderId||o._id.slice(0,8)}</code></td>
+        <td><div style="font-weight:600">${c.firstName||''} ${c.lastName||''}</div><div style="font-size:11px;color:var(--light)">${c.city||''}, ${c.address||''}</div></td>
+        <td><div style="font-size:12px">${c.phone||'—'}</div><div style="font-size:11px;color:var(--light)">${c.email||''}</div></td>
+        <td title="${itemNames}"><span style="font-weight:600">${itemCount}</span> ნივთი</td>
+        <td><span class="tprice">₾${(o.total||0).toFixed(2)}</span></td>
+        <td style="font-size:12px">${payLbl[o.payment]||o.payment||'—'}</td>
+        <td style="font-size:12px;color:var(--light)">${date}</td>
+        <td><span class="status ${statusCls[o.status]||'status-new'}">${statusLbl[o.status]||'ახალი'}</span></td>
+      </tr>`;
+    }).join('');
+  } catch(e) {
+    console.log('Orders error:', e.message);
+    tbody.innerHTML = '<tr class="empty-row"><td colspan="8">შეცდომა შეკვეთების ჩატვირთვისას</td></tr>';
+  }
+}
+
 // ── SETTINGS ──────────────────────────────────────────────────
 function saveSettings() {
   const s = {
@@ -934,6 +982,7 @@ firebase.auth().onAuthStateChanged(async user => {
   await loadOverrides();
   renderProds();
   loadCustomers();
+  loadOrders();
   loadSettings();
 });
 </script>

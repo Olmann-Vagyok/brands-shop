@@ -434,7 +434,7 @@ ul{list-style:none}
   <div class="cslist" id="cslist"></div>
   <div class="csf" id="csf" style="display:none">
     <div class="cst"><span>სულ:</span><strong id="cstotal">₾0</strong></div>
-    <button class="btn-co">შეძენის გაგრძელება →</button>
+    <button class="btn-co" onclick="goCheckout()">შეძენის გაგრძელება →</button>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -569,9 +569,13 @@ const P=[
 ];
 
 // ── STATE ─────────────────────────────────────────────────────
-let cart=[], wish=new Set();
+let cart=loadCart(), wish=new Set();
 let curCat='ყველა', curBrand='ყველა', curQ='', curSort='default';
 let shown=20;
+
+// ── CART PERSISTENCE (shared across pages) ────────────────────
+function loadCart(){try{return JSON.parse(localStorage.getItem('brands_cart'))||[]}catch(e){return[]}}
+function saveCart(){localStorage.setItem('brands_cart',JSON.stringify(cart))}
 
 // ── FILTER & SORT ─────────────────────────────────────────────
 function filtered(){
@@ -660,7 +664,9 @@ function addCart(id){
 }
 function rmCart(id){cart=cart.filter(i=>i.id!==id);updateCart()}
 function chQty(id,d){const it=cart.find(i=>i.id===id);if(!it)return;it.qty+=d;it.qty<=0?rmCart(id):updateCart()}
+function goCheckout(){if(!cart.length){showToast('კალათა ცარიელია');return}window.location.href='checkout.html'}
 function updateCart(){
+  saveCart();
   const tot=cart.reduce((s,i)=>s+i.qty,0);
   const totP=cart.reduce((s,i)=>s+i.price*i.qty,0);
   const bdg=document.getElementById('cbdg');
