@@ -165,12 +165,30 @@ tbody tr:last-child td{border-bottom:none}
 </head>
 <body>
 
-<!-- AUTH GATE (shown while checking) -->
+<!-- AUTH GATE (shown while checking / for login) -->
 <div class="gate" id="gate">
   <div class="gate-card">
-    <div style="font-size:48px;margin-bottom:16px">🔐</div>
+    <div style="font-size:46px;margin-bottom:8px">🔐</div>
     <h2>ადმინ პანელი</h2>
-    <p>გთხოვთ დაელოდოთ...</p>
+    <p id="gate-sub">შედით ადმინისტრატორის მონაცემებით</p>
+
+    <!-- Login form -->
+    <form id="admin-login-form" onsubmit="adminLogin(event)" style="display:none;text-align:left;margin-top:8px">
+      <div class="field" style="margin-bottom:14px">
+        <label>მომხმარებელი</label>
+        <input type="text" id="admin-user" placeholder="admin" autocomplete="username" required>
+      </div>
+      <div class="field" style="margin-bottom:6px">
+        <label>პაროლი</label>
+        <input type="password" id="admin-pass" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <div id="admin-err" style="display:none;font-size:12.5px;color:var(--red);font-weight:600;margin:10px 0;padding:9px 12px;background:rgba(224,49,49,.08);border-radius:7px"></div>
+      <button type="submit" class="btn btn-primary" id="admin-login-btn" style="width:100%;justify-content:center;margin-top:14px;padding:12px">შესვლა</button>
+    </form>
+
+    <div id="gate-actions" style="display:none;margin-top:18px">
+      <a href="index.html" class="btn btn-ghost" style="justify-content:center">← საიტზე დაბრუნება</a>
+    </div>
   </div>
 </div>
 
@@ -348,9 +366,9 @@ tbody tr:last-child td{border-bottom:none}
         <div class="card">
           <div class="card-head"><span class="card-title">🔐 ადმინ წვდომა</span></div>
           <div class="modal-b" style="border:none">
-            <div style="font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.6">ადმინ პანელზე წვდომა აქვს მხოლოდ ქვემოთ მითითებული ელ-ფოსტების მქონე მომხმარებლებს.</div>
+            <div style="font-size:13px;color:var(--mid);margin-bottom:16px;line-height:1.6">ადმინ პანელში შესვლა ხდება მომხმარებლისა და პაროლის საშუალებით.</div>
             <div id="admin-emails" style="margin-bottom:16px"></div>
-            <div style="font-size:12px;color:var(--light)">ადმინების შესაცვლელად გახსენით <code>js/auth.js</code> და შეცვალეთ <code>ADMIN_EMAILS</code>.</div>
+            <div style="font-size:12px;color:var(--light)">პაროლის შესაცვლელად: Firebase Console → Authentication → Users.</div>
           </div>
         </div>
       </div>
@@ -447,8 +465,21 @@ tbody tr:last-child td{border-bottom:none}
 <script src="js/auth.js"></script>
 
 <script>
-// ── ADMIN EMAILS ──────────────────────────────────────────────
-const ADMIN_EMAILS = ['irakli@brandr.ge'];
+// ── ADMIN CREDENTIALS ─────────────────────────────────────────
+// The admin signs in with a username + password. The username maps
+// to a dedicated Firebase account (create it in Firebase Console).
+// To use a different username, change ADMIN_USER + ADMIN_EMAIL below.
+const ADMIN_USER  = 'admin';              // what you type in the login box
+const ADMIN_EMAIL = 'admin@brands.ge';    // the Firebase account it maps to
+const ADMIN_EMAILS = [ADMIN_EMAIL];       // accounts allowed into the panel
+
+// Turn the typed username into the admin email (accepts full email too)
+function userToEmail(u) {
+  u = (u || '').trim().toLowerCase();
+  if (u === ADMIN_USER) return ADMIN_EMAIL;
+  if (u.includes('@'))   return u;
+  return u + '@brands.ge';
+}
 
 // ── DB ────────────────────────────────────────────────────────
 const db = firebase.firestore();
@@ -786,11 +817,16 @@ async function loadSettings() {
       document.getElementById('s-addr').value  = s.addr  || 'თბილისი, საქართველო';
     }
   } catch(e) {}
-  // Show admin emails
-  document.getElementById('admin-emails').innerHTML = ADMIN_EMAILS.map(e =>
-    `<div style="display:flex;align-items:center;gap:8px;padding:8px 12px;background:var(--bg);border-radius:8px;margin-bottom:8px;font-size:13px;font-weight:600">
-      <span style="color:var(--green)">✓</span> ${e}
-    </div>`).join('');
+  // Show admin login credentials
+  document.getElementById('admin-emails').innerHTML =
+    `<div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border-radius:8px;margin-bottom:8px;font-size:13px">
+      <span style="color:var(--green)">✓</span>
+      <span>მომხმარებელი: <strong>${ADMIN_USER}</strong></span>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;padding:10px 12px;background:var(--bg);border-radius:8px;font-size:13px">
+      <span style="color:var(--green)">✓</span>
+      <span>ანგარიში: <strong>${ADMIN_EMAIL}</strong></span>
+    </div>`;
 }
 
 // ── NAV ───────────────────────────────────────────────────────
@@ -818,7 +854,42 @@ function showToast(msg) {
 
 // ── SIGN OUT ──────────────────────────────────────────────────
 function doSignOut() {
-  firebase.auth().signOut().then(() => window.location.href = 'index.html');
+  firebase.auth().signOut().then(() => location.reload());
+}
+
+// ── ADMIN LOGIN (username + password) ─────────────────────────
+function adminLogin(e) {
+  e.preventDefault();
+  const err = document.getElementById('admin-err');
+  const btn = document.getElementById('admin-login-btn');
+  err.style.display = 'none';
+
+  const email = userToEmail(document.getElementById('admin-user').value);
+  const pass  = document.getElementById('admin-pass').value;
+
+  btn.disabled = true; btn.textContent = 'მიმდინარეობს...';
+
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(() => { /* onAuthStateChanged takes over */ })
+    .catch(ex => {
+      const msgs = {
+        'auth/wrong-password':      'პაროლი არასწორია',
+        'auth/user-not-found':      'მომხმარებელი ვერ მოიძებნა',
+        'auth/invalid-credential':  'მომხმარებელი ან პაროლი არასწორია',
+        'auth/invalid-email':       'მომხმარებლის ფორმატი არასწორია',
+        'auth/too-many-requests':   'ბევრი მცდელობა. ცოტა ხანში სცადეთ',
+        'auth/network-request-failed':'ქსელის შეცდომა',
+      };
+      err.textContent = msgs[ex.code] || ('შეცდომა: ' + ex.code);
+      err.style.display = 'block';
+      btn.disabled = false; btn.textContent = 'შესვლა';
+    });
+}
+
+function showLoginForm(message) {
+  document.getElementById('gate-sub').textContent = message || 'შედით ადმინისტრატორის მონაცემებით';
+  document.getElementById('admin-login-form').style.display = 'block';
+  document.getElementById('gate-actions').style.display = 'block';
 }
 
 // ── AUTH GATE ─────────────────────────────────────────────────
@@ -826,23 +897,16 @@ firebase.auth().onAuthStateChanged(async user => {
   const gate = document.getElementById('gate');
   const app  = document.getElementById('app');
 
+  // Not logged in → show the admin login form
   if (!user) {
-    gate.innerHTML = `<div class="gate-card">
-      <div style="font-size:48px;margin-bottom:16px">🔒</div>
-      <h2>წვდომა შეზღუდულია</h2>
-      <p>ადმინ პანელი მხოლოდ ავტორიზებული მომხმარებლებისთვისაა</p>
-      <a href="login.html" style="display:inline-block;margin-top:16px;padding:12px 28px;background:var(--blue);color:#fff;border-radius:8px;font-weight:700;font-size:14px">შესვლა →</a>
-    </div>`;
+    showLoginForm();
     return;
   }
 
+  // Logged in but NOT the admin account (e.g. a customer) → block + sign out
   if (!ADMIN_EMAILS.includes(user.email)) {
-    gate.innerHTML = `<div class="gate-card">
-      <div style="font-size:48px;margin-bottom:16px">⛔</div>
-      <h2>უფლება არ გაქვთ</h2>
-      <p>${user.email} — ეს ანგარიში ადმინი არ არის</p>
-      <a href="index.html" style="display:inline-block;margin-top:16px;padding:12px 28px;background:var(--blue);color:#fff;border-radius:8px;font-weight:700;font-size:14px">← საიტი</a>
-    </div>`;
+    await firebase.auth().signOut();
+    showLoginForm('ეს ანგარიში ადმინი არ არის. შედით ადმინის მონაცემებით.');
     return;
   }
 
