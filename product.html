@@ -280,21 +280,20 @@ ul{list-style:none}
 
 <script>
 // ── IMAGES ────────────────────────────────────────────────────
-const B='https://el-ss.ge/upload/66/image/product/350x350/';
 const IMGS={
-  breaker:  B+'57694e87-956d-4370-84f5-6f17ec1a11e5-7d0db447a9fc534d.webp',
-  connector:B+'2320856c-4613-4e7b-8a1a-8e996f7a35d9-ab2c6428ce894b21.png',
-  socket:   B+'505f12c2-6475-4a9d-83b8-4b1bfe4797e6-9aa480ff4413215c.png',
-  switch:   B+'eb79029f-96cd-4ce4-b173-f1766e03f2e0-b8ea4ca0299d08b6.png',
-  cable:    B+'e1d91a6f-a98c-4f8f-b6aa-bd04a4c7c46b-45206550938806e6.png',
-  panel:    B+'71d5114c-4872-482c-b5f8-f88236f28140-902239f188506541.png',
-  extension:B+'e63c2113-9de9-4903-9f1f-693e79f0fa15-6c63fc17ed33c0cc.png',
+  breaker:  'images/products/breaker.png',
+  connector:'images/products/connector.png',
+  socket:   'images/products/socket.png',
+  switch:   'images/products/switch.png',
+  cable:    'images/products/cable.png',
+  panel:    'images/products/panel.png',
+  extension:'images/products/extension.png',
 };
 const PIMG={
-  36:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
-  37:B+'f1b458ec-2d9e-4c12-bb28-3e54e723d609-c1ff8b9efa916612.png',
-  76:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
-  77:B+'bb477db9-a170-4abc-9231-358aaeb0032b-0d8066fd0f9a948f.png',
+  36:'images/products/cable_lug.png',
+  37:'images/products/cable_lug.png',
+  76:'images/products/retro.png',
+  77:'images/products/retro.png',
 };
 function img(p){return PIMG[p.id]||IMGS[p.t]||IMGS.breaker}
 
