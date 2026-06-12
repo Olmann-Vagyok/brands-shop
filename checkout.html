@@ -434,8 +434,8 @@ function sendOrderEmail(order){
     delivery:      order.delivery===0 ? 'უფასო' : '₾'+order.delivery.toFixed(2),
     total:         '₾'+order.total.toFixed(2),
     store_email:   STORE_EMAIL,
-    to_email:      STORE_EMAIL,   // store owner gets the order
-    reply_to:      c.email,
+    to_email:      c.email,       // confirmation goes to the CUSTOMER
+    reply_to:      STORE_EMAIL,   // customer's reply reaches the store
   };
 
   try {
