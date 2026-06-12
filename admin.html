@@ -597,9 +597,15 @@ async function loadOverrides() {
   try {
     const snap = await db.collection('product_overrides').get();
     snap.forEach(doc => {
-      const idx = PRODUCTS.findIndex(p => p.id === doc.id*1 || p.id === doc.id);
-      if (idx !== -1) Object.assign(PRODUCTS[idx], doc.data());
-      else PRODUCTS.push({...doc.data(), id: doc.id});
+      const data = doc.data();
+      const idx = PRODUCTS.findIndex(p => String(p.id) === String(doc.id));
+      if (data._deleted) {
+        if (idx !== -1) PRODUCTS.splice(idx, 1);          // hidden via tombstone
+      } else if (idx !== -1) {
+        Object.assign(PRODUCTS[idx], data);                // edited product
+      } else {
+        PRODUCTS.push({...data, id: isNaN(doc.id*1)?doc.id:doc.id*1}); // new product
+      }
     });
   } catch(e) {}
 }
@@ -764,7 +770,9 @@ function closeConfirm() { document.getElementById('conf-ov').classList.remove('o
 async function confirmDelete() {
   if (!deleteId) return;
   PRODUCTS = PRODUCTS.filter(p => p.id !== deleteId);
-  try { await db.collection('product_overrides').doc(String(deleteId)).delete(); } catch(e) {}
+  // Write a "tombstone" so the storefront also hides it (works for
+  // original products too, which have no override doc otherwise).
+  try { await db.collection('product_overrides').doc(String(deleteId)).set({_deleted:true, id:deleteId}); } catch(e) {}
   closeConfirm(); renderProds();
   showToast('🗑️ პროდუქტი წაიშალა');
 }
