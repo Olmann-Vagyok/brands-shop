@@ -246,7 +246,7 @@ ul{list-style:none}
       <button>🔍</button>
     </div>
     <div class="hacts">
-      <div class="ib">👤<span class="lb">ანგარიში</span></div>
+      <div class="ib" id="account-btn" onclick="window.location.href='login.html'">👤<span class="lb">შესვლა</span></div>
       <div class="ib">🤍<span class="lb">რჩეულები</span></div>
       <div class="ib" id="cbtn">🛒<span id="cbdg" class="bdg">0</span><span class="lb">კალათა</span></div>
     </div>
@@ -728,5 +728,8 @@ const product=P.find(p=>p.id===id);
 product?renderProduct(product):renderNotFound();
 updateCart();
 </script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="js/auth.js"></script>
 </body>
 </html>

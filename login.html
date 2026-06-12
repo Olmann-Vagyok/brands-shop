@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>შესვლა — BRAND S</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Georgian:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blue:#1B3A6B;--blue-dk:#122850;--blue-lt:#2A5298;
+  --yellow:#F9A800;--yellow-dk:#D48E00;
+  --white:#fff;--bg:#F4F6FA;--border:#DDE3EE;
+  --text:#1B2D52;--mid:#4A5568;--light:#8A94A6;
+  --red:#E03131;--green:#2B7A3A;
+  --t:.2s ease;
+}
+body{font-family:'Noto Sans Georgian','Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;flex-direction:column}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font-family:inherit}
+
+/* TOPBAR */
+.topbar{background:var(--blue-dk);color:rgba(255,255,255,.7);font-size:12px;padding:7px 0;text-align:center}
+.topbar strong{color:var(--yellow)}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid var(--border);box-shadow:0 2px 10px rgba(27,58,107,.07)}
+.hi{max-width:1000px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:66px}
+.logo-w{display:flex;align-items:center;gap:10px}
+.logo-t .bn{font-size:15px;font-weight:800;color:var(--blue);letter-spacing:2px}
+.logo-t .bn span{color:var(--yellow)}
+.logo-t .tg{font-size:9px;color:var(--light);letter-spacing:1.5px;text-transform:uppercase}
+.back-link{font-size:13px;font-weight:600;color:var(--blue);display:flex;align-items:center;gap:6px;padding:8px 16px;border:1.5px solid var(--border);border-radius:8px;transition:all var(--t)}
+.back-link:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* PAGE */
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:36px 16px}
+.card{background:#fff;border:1.5px solid var(--border);border-radius:16px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 8px 40px rgba(27,58,107,.1)}
+
+/* CARD HEADER */
+.card-top{background:linear-gradient(130deg,var(--blue-dk),var(--blue));padding:32px 32px 24px;text-align:center}
+.card-logo{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px}
+.card-top h2{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
+.card-top p{font-size:13px;color:rgba(255,255,255,.6)}
+
+/* TABS */
+.tabs{display:flex;background:var(--bg);border-bottom:1px solid var(--border)}
+.tab{flex:1;padding:14px;font-size:14px;font-weight:600;color:var(--light);cursor:pointer;text-align:center;border-bottom:2px solid transparent;transition:all var(--t);background:none}
+.tab.on{color:var(--blue);border-bottom-color:var(--blue);background:#fff}
+
+/* BODY */
+.card-body{padding:28px 32px}
+
+/* SOCIAL BUTTONS */
+.social-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);margin-bottom:10px}
+.btn-google{background:#fff;border:1.5px solid var(--border);color:var(--text)}
+.btn-google:hover{border-color:#4285F4;background:#F8FBFF}
+.btn-facebook{background:#1877F2;border:1.5px solid #1877F2;color:#fff}
+.btn-facebook:hover{background:#166FE5}
+.btn-google img,.btn-facebook img{width:20px;height:20px}
+
+/* DIVIDER */
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--light);font-size:12px;font-weight:600}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+
+/* FORM */
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12.5px;font-weight:700;color:var(--mid);margin-bottom:6px}
+.field input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;color:var(--text);outline:none;transition:border-color var(--t)}
+.field input:focus{border-color:var(--yellow)}
+.field input.error{border-color:var(--red)}
+.field-err{font-size:11.5px;color:var(--red);margin-top:4px;display:none}
+
+/* SUBMIT */
+.btn-submit{width:100%;padding:13px;background:var(--blue);color:#fff;font-size:15px;font-weight:700;border-radius:10px;transition:all var(--t);margin-top:6px}
+.btn-submit:hover{background:var(--yellow);color:var(--blue-dk)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* MESSAGES */
+.msg{padding:12px 14px;border-radius:8px;font-size:13px;font-weight:600;margin-bottom:16px;display:none}
+.msg-err{background:rgba(224,49,49,.08);color:var(--red);border:1px solid rgba(224,49,49,.2)}
+.msg-ok{background:rgba(43,122,58,.08);color:var(--green);border:1px solid rgba(43,122,58,.2)}
+
+/* FOOTER */
+.card-foot{padding:16px 32px;background:var(--bg);border-top:1px solid var(--border);text-align:center;font-size:12.5px;color:var(--light)}
+.card-foot a{color:var(--blue);font-weight:600}
+
+/* SETUP NOTICE */
+.setup-notice{background:rgba(249,168,0,.1);border:1px solid rgba(249,168,0,.3);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--blue-dk)}
+.setup-notice strong{color:var(--yellow-dk)}
+
+/* FOOTER */
+footer{background:#0F1F3D;color:rgba(255,255,255,.4);text-align:center;padding:16px;font-size:12px}
+</style>
+</head>
+<body>
+
+<div class="topbar">🚚 <strong>₾50-ზე მეტი</strong> — <strong>უფასო მიტანა!</strong> &nbsp;·&nbsp; 📞 <strong>+995 555 000 000</strong></div>
+
+<header class="header">
+  <div class="hi">
+    <a href="index.html" class="logo-w">
+      <img src="images/logo.svg" alt="BRAND S" style="height:42px;width:auto">
+      <div class="logo-t"><div class="bn">BRAND <span>S</span></div><div class="tg">ელექტრო პროდუქტები</div></div>
+    </a>
+    <a href="index.html" class="back-link">← კატალოგი</a>
+  </div>
+</header>
+
+<div class="page">
+  <div class="card">
+    <div class="card-top">
+      <div class="card-logo">
+        <img src="images/logo.svg" alt="" style="height:48px;width:auto;filter:brightness(0) invert(1) opacity(.9)">
+      </div>
+      <h2 id="card-title">კეთილი იყოს თქვენი დაბრუნება</h2>
+      <p id="card-sub">შედით ანგარიშში ან შექმენით ახალი</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('login',this)">შესვლა</button>
+      <button class="tab" onclick="switchTab('register',this)">რეგისტრაცია</button>
+    </div>
+
+    <div class="card-body">
+      <!-- Setup notice (shown when Firebase not configured) -->
+      <div class="setup-notice" id="setup-notice" style="display:none">
+        ⚙️ Firebase ჯერ კონფიგურებული არ არის. იხილეთ <strong>js/auth.js</strong> ინსტრუქცია.
+      </div>
+
+      <!-- Error/Success messages -->
+      <div class="msg msg-err" id="msg-err"></div>
+      <div class="msg msg-ok" id="msg-ok"></div>
+
+      <!-- SOCIAL BUTTONS -->
+      <button class="social-btn btn-google" onclick="signInGoogle()">
+        <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20H24v8h11.3C33.7 33.4 29.3 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.5 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20c11 0 20-9 20-20 0-1.3-.1-2.7-.4-4z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.5 15.1 18.9 12 24 12c3.1 0 5.9 1.2 8 3.1l5.7-5.7C34.1 6.5 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/><path fill="#4CAF50" d="M24 44c5.2 0 9.9-1.9 13.5-5l-6.2-5.2C29.6 35.5 26.9 36 24 36c-5.2 0-9.7-2.6-11.3-7.1l-6.5 5C9.5 39.5 16.2 44 24 44z"/><path fill="#1976D2" d="M43.6 20H24v8h11.3c-.9 2.7-2.7 4.9-5 6.4l6.2 5.2c3.6-3.3 5.9-8.3 5.9-13.6 0-1.3-.1-2.7-.4-4z"/></svg>
+        Google-ით შესვლა
+      </button>
+      <button class="social-btn btn-facebook" onclick="signInFacebook()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Facebook-ით შესვლა
+      </button>
+
+      <div class="divider">ან</div>
+
+      <!-- LOGIN FORM -->
+      <form id="form-login" onsubmit="submitLogin(event)">
+        <div class="field">
+          <label>ელ-ფოსტა</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label>პაროლი</label>
+          <input type="password" id="login-pass" placeholder="••••••••" required>
+          <div class="field-err" id="login-pass-err"></div>
+        </div>
+        <div style="text-align:right;margin-bottom:16px">
+          <a href="#" onclick="resetPassword(event)" style="font-size:12.5px;color:var(--blue);font-weight:600">პაროლი დაგავიწყდათ?</a>
+        </div>
+        <button type="submit" class="btn-submit" id="btn-login">შესვლა</button>
+      </form>
+
+      <!-- REGISTER FORM -->
+      <form id="form-register" onsubmit="submitRegister(event)" style="display:none">
+        <div class="field">
+          <label>სახელი და გვარი</label>
+          <input type="text" id="reg-name" placeholder="ი. ბერიძე" required>
+        </div>
+        <div class="field">
+          <label>ელ-ფოსტა</label>
+          <input type="email" id="reg-email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label>პაროლი (მინ. 6 სიმბოლო)</label>
+          <input type="password" id="reg-pass" placeholder="••••••••" required minlength="6">
+        </div>
+        <div class="field">
+          <label>გაიმეორე პაროლი</label>
+          <input type="password" id="reg-pass2" placeholder="••••••••" required>
+          <div class="field-err" id="reg-pass2-err">პაროლები არ ემთხვევა</div>
+        </div>
+        <button type="submit" class="btn-submit" id="btn-register">ანგარიშის შექმნა</button>
+      </form>
+    </div>
+
+    <div class="card-foot">
+      კატალოგზე გასვლა: <a href="index.html">BRAND S შოპი</a>
+    </div>
+  </div>
+</div>
+
+<footer>© 2025 BRAND S · ყველა უფლება დაცულია</footer>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+<script src="js/auth.js"></script>
+
+<script>
+// ── CHECK CONFIG ──────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', function() {
+  if (!FB_CONFIGURED) {
+    document.getElementById('setup-notice').style.display = 'block';
+  } else {
+    // Redirect if already logged in
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) window.location.href = 'index.html';
+    });
+  }
+});
+
+// ── TAB SWITCH ────────────────────────────────────────────────
+function switchTab(tab, el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
+  document.getElementById('form-register').style.display = tab === 'register' ? 'block' : 'none';
+  clearMessages();
+}
+
+// ── MESSAGES ──────────────────────────────────────────────────
+function showErr(msg) {
+  const el = document.getElementById('msg-err');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('msg-ok').style.display = 'none';
+}
+function showOk(msg) {
+  const el = document.getElementById('msg-ok');
+  el.textContent = msg; el.style.display = 'block';
+  document.getElementById('msg-err').style.display = 'none';
+}
+function clearMessages() {
+  document.getElementById('msg-err').style.display = 'none';
+  document.getElementById('msg-ok').style.display = 'none';
+}
+
+function firebaseErr(code) {
+  const msgs = {
+    'auth/user-not-found':       'ეს ელ-ფოსტა რეგისტრირებული არ არის',
+    'auth/wrong-password':       'პაროლი არასწორია',
+    'auth/email-already-in-use': 'ეს ელ-ფოსტა უკვე გამოყენებულია',
+    'auth/weak-password':        'პაროლი ძალიან მარტივია (მინ. 6 სიმბოლო)',
+    'auth/invalid-email':        'ელ-ფოსტის ფორმატი არასწორია',
+    'auth/popup-closed-by-user': 'შესვლა გაუქმდა',
+    'auth/network-request-failed':'ქსელის შეცდომა. სცადეთ თავიდან',
+    'auth/too-many-requests':    'ძალიან ბევრი მცდელობა. ცოტა ხანში სცადეთ',
+    'auth/invalid-credential':   'ელ-ფოსტა ან პაროლი არასწორია',
+  };
+  return msgs[code] || 'შეცდომა: ' + code;
+}
+
+// ── GOOGLE ────────────────────────────────────────────────────
+function signInGoogle() {
+  if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
+  const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(() => { window.location.href = 'index.html'; })
+    .catch(e => showErr(firebaseErr(e.code)));
+}
+
+// ── FACEBOOK ──────────────────────────────────────────────────
+function signInFacebook() {
+  if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
+  const provider = new firebase.auth.FacebookAuthProvider();
+  firebase.auth().signInWithPopup(provider)
+    .then(() => { window.location.href = 'index.html'; })
+    .catch(e => showErr(firebaseErr(e.code)));
+}
+
+// ── EMAIL LOGIN ───────────────────────────────────────────────
+function submitLogin(e) {
+  e.preventDefault();
+  if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
+  clearMessages();
+  const email = document.getElementById('login-email').value;
+  const pass  = document.getElementById('login-pass').value;
+  const btn   = document.getElementById('btn-login');
+  btn.disabled = true; btn.textContent = 'მიმდინარეობს...';
+
+  firebase.auth().signInWithEmailAndPassword(email, pass)
+    .then(() => { window.location.href = 'index.html'; })
+    .catch(e => {
+      showErr(firebaseErr(e.code));
+      btn.disabled = false; btn.textContent = 'შესვლა';
+    });
+}
+
+// ── REGISTER ──────────────────────────────────────────────────
+function submitRegister(e) {
+  e.preventDefault();
+  if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
+  clearMessages();
+  const name  = document.getElementById('reg-name').value.trim();
+  const email = document.getElementById('reg-email').value;
+  const pass  = document.getElementById('reg-pass').value;
+  const pass2 = document.getElementById('reg-pass2').value;
+  const errEl = document.getElementById('reg-pass2-err');
+  const btn   = document.getElementById('btn-register');
+
+  if (pass !== pass2) {
+    errEl.style.display = 'block'; return;
+  }
+  errEl.style.display = 'none';
+
+  btn.disabled = true; btn.textContent = 'იქმნება...';
+
+  firebase.auth().createUserWithEmailAndPassword(email, pass)
+    .then(result => result.user.updateProfile({ displayName: name }))
+    .then(() => { window.location.href = 'index.html'; })
+    .catch(e => {
+      showErr(firebaseErr(e.code));
+      btn.disabled = false; btn.textContent = 'ანგარიშის შექმნა';
+    });
+}
+
+// ── PASSWORD RESET ────────────────────────────────────────────
+function resetPassword(e) {
+  e.preventDefault();
+  if (!FB_CONFIGURED) { showErr('Firebase ჯერ კონფიგურებული არ არის'); return; }
+  const email = document.getElementById('login-email').value;
+  if (!email) { showErr('შეიყვანეთ ელ-ფოსტა პაროლის გადასაყენებლად'); return; }
+  firebase.auth().sendPasswordResetEmail(email)
+    .then(() => showOk('პაროლის გადაყენების ბმული გამოგზავნილია ' + email))
+    .catch(e => showErr(firebaseErr(e.code)));
+}
+</script>
+</body>
+</html>
