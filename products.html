@@ -60,10 +60,10 @@ ul{list-style:none}
 .bci .cur{color:var(--text);font-weight:600}
 
 /* PAGE LAYOUT */
-.shell{max-width:1400px;margin:0 auto;padding:24px 28px 56px;display:grid;grid-template-columns:268px minmax(0,1fr);gap:26px;align-items:start}
+.shell{max-width:1400px;margin:0 auto;padding:24px 28px 56px;display:flex;gap:26px;align-items:flex-start}
 
 /* SIDEBAR */
-.side{position:sticky;top:88px}
+.side{width:268px;flex:0 0 268px;position:sticky;top:88px}
 .fbox{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
 .fhead{display:flex;align-items:center;justify-content:space-between;padding:15px 18px;cursor:pointer;user-select:none}
 .fhead h4{font-size:14px;font-weight:800;color:var(--text)}
@@ -97,7 +97,7 @@ ul{list-style:none}
 .btn-clear:hover{border-color:var(--red);color:var(--red)}
 
 /* MAIN */
-.main{min-width:0}
+.main{flex:1;min-width:0}
 .topbar2{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px;flex-wrap:wrap}
 .topbar2 .cnt{font-size:14px;color:var(--mid)}
 .topbar2 .cnt b{color:var(--text);font-weight:800}
